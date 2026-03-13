@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Culinary_Guide.Views.MapPage"
+             BackgroundColor="{StaticResource Background}"
+             Title="🗺️ 探索附近">
+    
+    <Grid RowDefinitions="*,Auto" Padding="16,16,16,0">
+        
+        <!-- 模拟地图区域 -->
+        <Border Grid.Row="0"
+                StrokeShape="RoundRectangle 16"
+                BackgroundColor="#E8F5E9"
+                Stroke="Transparent">
+            <Grid>
+                
+                <!-- 模拟地图背景 -->
+                <GraphicsView x:Name="MapView"
+                              Drawable="{Binding MapDrawable}"
+                              BackgroundColor="#E8F5E9" />
+                
+                <!-- 地图提示 -->
+                <VerticalStackLayout HorizontalOptions="Center"
+                                     VerticalOptions="Center"
+                                     Spacing="8"
+                                     IsVisible="{Binding HasRestaurants, Converter={StaticResource InvertedBoolConverter}}">
+                    <Label Text="🗺️"
+                           FontSize="48"
+                           HorizontalOptions="Center" />
+                    <Label Text="附近暂无餐厅"
+                           FontSize="18"
+                           TextColor="{StaticResource TextSecondary}"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+                
+                <!-- 图例 -->
+                <Border BackgroundColor="White"
+                        Padding="12,8"
+                        StrokeShape="RoundRectangle 8"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Start"
+                        Margin="16"
+                        Stroke="Transparent">
+                    <HorizontalStackLayout Spacing="8">
+                        <Label Text="📍" FontSize="14" />
+                        <Label Text="我的位置"
+                               FontSize="12"
+                               TextColor="{StaticResource TextSecondary}"
+                               VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Border>
+                
+                <!-- 餐厅数量提示 -->
+                <Border BackgroundColor="White"
+                        Padding="12,8"
+                        StrokeShape="RoundRectangle 8"
+                        HorizontalOptions="End"
+                        VerticalOptions="Start"
+                        Margin="16"
+                        Stroke="Transparent">
+                    <HorizontalStackLayout Spacing="4">
+                        <Label Text="🍴" FontSize="14" />
+                        <Label Text="{Binding RestaurantCount, StringFormat='{0} 家餐厅'}"
+                               FontSize="12"
+                               TextColor="{StaticResource TextSecondary}"
+                               VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Border>
+                
+            </Grid>
+        </Border>
+        
+        <!-- 底部导航栏 -->
+        <Border Grid.Row="1"
+                BackgroundColor="White"
+                StrokeShape="RoundRectangle 24,24,0,0"
+                Padding="0"
+                HeightRequest="70"
+                Stroke="Transparent">
+            <Grid ColumnDefinitions="*,*,*">
+                
+                <!-- 收藏 Tab -->
+                <Grid Grid.Column="0" 
+                      x:Name="FavoritesTab"
+                      HorizontalOptions="Center" 
+                      VerticalOptions="Center">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnFavoritesTabClicked" />
+                    </Grid.GestureRecognizers>
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="❤️" 
+                               FontSize="24" 
+                               HorizontalOptions="Center"
+                               TextColor="#80000000" />
+                        <Label Text="收藏" 
+                               FontSize="12" 
+                               HorizontalOptions="Center"
+                               TextColor="#80000000" />
+                    </VerticalStackLayout>
+                </Grid>
+                
+                <!-- 首页 Tab -->
+                <Grid Grid.Column="1" 
+                      x:Name="HomeTab"
+                      HorizontalOptions="Center" 
+                      VerticalOptions="Center">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnHomeTabClicked" />
+                    </Grid.GestureRecognizers>
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="🏠" 
+                               FontSize="24" 
+                               HorizontalOptions="Center"
+                               TextColor="#80000000" />
+                        <Label Text="首页" 
+                               FontSize="12" 
+                               HorizontalOptions="Center"
+                               TextColor="#80000000" />
+                    </VerticalStackLayout>
+                </Grid>
+                
+                <!-- 探索 Tab (当前选中) -->
+                <Grid Grid.Column="2" 
+                      x:Name="ExploreTab"
+                      HorizontalOptions="Center" 
+                      VerticalOptions="Center">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnExploreTabClicked" />
+                    </Grid.GestureRecognizers>
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="🗺️" 
+                               FontSize="24" 
+                               HorizontalOptions="Center"
+                               TextColor="#000000" />
+                        <Label Text="探索" 
+                               FontSize="12" 
+                               HorizontalOptions="Center"
+                               TextColor="#000000" />
+                    </VerticalStackLayout>
+                </Grid>
+                
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>

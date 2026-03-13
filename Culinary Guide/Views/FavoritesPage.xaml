@@ -1,99 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Culinary_Guide.MainPage"
+             x:Class="Culinary_Guide.Views.FavoritesPage"
              BackgroundColor="{StaticResource Background}"
-             Title="🍴 美食地图">
+             Title="❤️ 我的收藏">
     
-    <Grid RowDefinitions="Auto,Auto,Auto,*,Auto" Padding="16,16,16,0">
+    <Grid RowDefinitions="*,Auto" Padding="16,16,16,0">
         
-        <!-- 欢迎语 + 定位 -->
-        <VerticalStackLayout Grid.Row="0" Spacing="8">
-            <Label Text="今天吃什么呢？"
-                   FontSize="24"
-                   FontAttributes="Bold"
-                   TextColor="{StaticResource TextPrimary}" />
-            <Border BackgroundColor="{StaticResource Secondary}"
-                    Padding="12,8"
-                    StrokeShape="RoundRectangle 20"
-                    HorizontalOptions="Start">
-                <HorizontalStackLayout Spacing="4">
-                    <Label Text="📍" FontSize="16" />
-                    <Label Text="北京国贸"
-                           TextColor="#2E7D32"
-                           FontSize="14" />
-                </HorizontalStackLayout>
-            </Border>
-        </VerticalStackLayout>
-        
-        <!-- 搜索框 -->
-        <Border Grid.Row="1"
-                Margin="0,16,0,16"
-                Padding="0"
-                StrokeShape="RoundRectangle 20"
-                Stroke="Transparent"
-                BackgroundColor="{StaticResource CardBackground}">
-                    <SearchBar x:Name="SearchBar"
-                               Placeholder="🔍 搜索餐厅或菜系..."
-                               BackgroundColor="{StaticResource CardBackground}"
-                               SearchButtonPressed="OnSearch" />
-        </Border>
-        
-        <!-- 排序按钮组 -->
-        <HorizontalStackLayout Grid.Row="2"
-                               Spacing="12"
-                               Margin="0,0,0,12">
-            <Border x:Name="DistanceBtn"
-                    BackgroundColor="{StaticResource Primary}"
-                    Padding="16,10"
-                    StrokeShape="RoundRectangle 20">
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnDistanceSort" />
-                </Border.GestureRecognizers>
-                <Label Text="📍 距离"
-                       TextColor="White"
-                       FontSize="14"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center" />
-            </Border>
-            
-            <Border x:Name="RatingBtn"
-                    BackgroundColor="{StaticResource CardBackground}"
-                    Padding="16,10"
-                    Stroke="{StaticResource Primary}"
-                    StrokeShape="RoundRectangle 20">
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnRatingSort" />
-                </Border.GestureRecognizers>
-                <Label Text="⭐ 评分"
-                       TextColor="{StaticResource Primary}"
-                       FontSize="14"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center" />
-            </Border>
-            
-            <Border x:Name="ReviewsBtn"
-                    BackgroundColor="{StaticResource CardBackground}"
-                    Padding="16,10"
-                    Stroke="{StaticResource Primary}"
-                    StrokeShape="RoundRectangle 20">
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnReviewsSort" />
-                </Border.GestureRecognizers>
-                <Label Text="🔥 热门"
-                       TextColor="{StaticResource Primary}"
-                       FontSize="14"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center" />
-            </Border>
-        </HorizontalStackLayout>
-        
-        <!-- 餐厅列表 -->
-        <CollectionView Grid.Row="3"
-                        x:Name="RestaurantList"
+        <!-- 收藏列表 -->
+        <CollectionView Grid.Row="0"
+                        x:Name="FavoritesList"
                         SelectionMode="Single"
-                        SelectionChanged="OnRestaurantSelected"
-                        Margin="0,-10,0,0">
+                        SelectionChanged="OnRestaurantSelected">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Border Margin="0,0,0,16"
@@ -125,8 +43,7 @@
                                 <Border.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="OnFavoriteClicked" />
                                 </Border.GestureRecognizers>
-                                <Label x:Name="FavoriteIcon"
-                                       Text="🤍"
+                                <Label Text="❤️"
                                        FontSize="20"
                                        HorizontalOptions="Center"
                                        VerticalOptions="Center" />
@@ -192,10 +109,29 @@
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
+            
+            <!-- 空状态提示 -->
+            <CollectionView.EmptyView>
+                <VerticalStackLayout HorizontalOptions="Center"
+                                     VerticalOptions="Center"
+                                     Spacing="16">
+                    <Label Text="💔"
+                           FontSize="48"
+                           HorizontalOptions="Center" />
+                    <Label Text="还没有收藏任何餐厅"
+                           FontSize="18"
+                           TextColor="{StaticResource TextSecondary}"
+                           HorizontalOptions="Center" />
+                    <Label Text="去首页发现美食吧！"
+                           FontSize="14"
+                           TextColor="{StaticResource Distance}"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
         </CollectionView>
         
         <!-- 底部导航栏 -->
-        <Border Grid.Row="4"
+        <Border Grid.Row="1"
                 BackgroundColor="White"
                 StrokeShape="RoundRectangle 24,24,0,0"
                 Padding="0"
@@ -203,7 +139,7 @@
                 Stroke="Transparent">
             <Grid ColumnDefinitions="*,*,*">
                 
-                <!-- 收藏 Tab -->
+                <!-- 收藏 Tab (当前选中) -->
                 <Grid Grid.Column="0" 
                       x:Name="FavoritesTab"
                       HorizontalOptions="Center" 
@@ -215,15 +151,15 @@
                         <Label Text="❤️" 
                                FontSize="24" 
                                HorizontalOptions="Center"
-                               TextColor="#80000000" />
+                               TextColor="#000000" />
                         <Label Text="收藏" 
                                FontSize="12" 
                                HorizontalOptions="Center"
-                               TextColor="#80000000" />
+                               TextColor="#000000" />
                     </VerticalStackLayout>
                 </Grid>
                 
-                <!-- 首页 Tab (默认选中) -->
+                <!-- 首页 Tab -->
                 <Grid Grid.Column="1" 
                       x:Name="HomeTab"
                       HorizontalOptions="Center" 
@@ -235,11 +171,11 @@
                         <Label Text="🏠" 
                                FontSize="24" 
                                HorizontalOptions="Center"
-                               TextColor="#000000" />
+                               TextColor="#80000000" />
                         <Label Text="首页" 
                                FontSize="12" 
                                HorizontalOptions="Center"
-                               TextColor="#000000" />
+                               TextColor="#80000000" />
                     </VerticalStackLayout>
                 </Grid>
                 

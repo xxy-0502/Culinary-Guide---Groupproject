@@ -10,6 +10,7 @@ namespace Culinary_Guide
         private readonly IFavoriteService _favoriteService;
         private List<Restaurant> _allRestaurants = new();
         private SortOption _currentSort = SortOption.Distance;
+        private TabType _currentTab = TabType.Home;
 
         public MainPage(IRestaurantService restaurantService, IFavoriteService favoriteService)
         {
@@ -22,6 +23,7 @@ namespace Culinary_Guide
         {
             base.OnAppearing();
             await LoadRestaurants();
+            UpdateTabStyles();
         }
 
         private async Task LoadRestaurants()
@@ -119,5 +121,58 @@ namespace Culinary_Guide
                 RestaurantList.SelectedItem = null;
             }
         }
+
+        private async void OnFavoritesTabClicked(object sender, EventArgs e)
+        {
+            _currentTab = TabType.Favorites;
+            UpdateTabStyles();
+            var favoritesPage = new FavoritesPage(_restaurantService, _favoriteService, _allRestaurants);
+            await Navigation.PushAsync(favoritesPage);
+        }
+
+        private void OnHomeTabClicked(object sender, EventArgs e)
+        {
+            _currentTab = TabType.Home;
+            UpdateTabStyles();
+        }
+
+        private async void OnExploreTabClicked(object sender, EventArgs e)
+        {
+            _currentTab = TabType.Explore;
+            UpdateTabStyles();
+            var mapPage = new MapPage(_restaurantService, _favoriteService, _allRestaurants);
+            await Navigation.PushAsync(mapPage);
+        }
+
+        private void UpdateTabStyles()
+        {
+            var selectedColor = Color.FromRgba(0, 0, 0, 255);
+            var unselectedColor = Color.FromRgba(0, 0, 0, 128);
+
+            void UpdateTab(Grid tab, bool isSelected)
+            {
+                if (tab.Children.FirstOrDefault() is VerticalStackLayout stack)
+                {
+                    foreach (var child in stack.Children)
+                    {
+                        if (child is Label label)
+                        {
+                            label.TextColor = isSelected ? selectedColor : unselectedColor;
+                        }
+                    }
+                }
+            }
+
+            UpdateTab(FavoritesTab, _currentTab == TabType.Favorites);
+            UpdateTab(HomeTab, _currentTab == TabType.Home);
+            UpdateTab(ExploreTab, _currentTab == TabType.Explore);
+        }
+    }
+
+    public enum TabType
+    {
+        Favorites,
+        Home,
+        Explore
     }
 }
