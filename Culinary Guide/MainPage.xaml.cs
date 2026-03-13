@@ -112,18 +112,21 @@ namespace Culinary_Guide
 
         private async void OnRestaurantClicked(object sender, EventArgs e)
         {
-            if (sender is TapGestureRecognizer tap && tap.BindingContext is Restaurant restaurant)
+            Restaurant? restaurant = null;
+            
+            if (sender is TapGestureRecognizer tap)
+            {
+                restaurant = tap.BindingContext as Restaurant;
+            }
+            else if (sender is Image image)
+            {
+                restaurant = image.BindingContext as Restaurant;
+            }
+            
+            if (restaurant != null)
             {
                 var detailPage = new RestaurantDetailPage(_restaurantService, _favoriteService, restaurant);
                 await Navigation.PushAsync(detailPage);
-            }
-        }
-
-        private void OnCarouselBindingContextChanged(object sender, EventArgs e)
-        {
-            if (sender is CarouselView carousel && carousel.BindingContext is Restaurant restaurant)
-            {
-                carousel.ItemsSource = restaurant.ImageUrls;
             }
         }
     }
