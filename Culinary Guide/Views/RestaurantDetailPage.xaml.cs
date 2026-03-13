@@ -18,14 +18,17 @@ namespace Culinary_Guide.Views
             _favoriteService = favoriteService;
             _restaurant = restaurant;
             BindingContext = restaurant;
-            LoadImages();
-            LoadReviews();
             UpdateFavoriteIcon();
+            LoadReviews();
         }
 
-        private async void LoadImages()
+        protected override void OnAppearing()
         {
-            ImageCarousel.ItemsSource = _restaurant.ImageUrls;
+            base.OnAppearing();
+            if (ImageCarousel.ItemsSource == null)
+            {
+                ImageCarousel.ItemsSource = _restaurant.ImageUrls;
+            }
         }
 
         private async void LoadReviews()

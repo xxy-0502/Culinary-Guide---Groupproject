@@ -110,12 +110,13 @@ namespace Culinary_Guide
             }
         }
 
-        private async void OnRestaurantClicked(object sender, EventArgs e)
+        private async void OnRestaurantSelected(object sender, SelectionChangedEventArgs e)
         {
-            if (sender is TapGestureRecognizer tap && tap.BindingContext is Restaurant restaurant)
+            if (e.CurrentSelection.FirstOrDefault() is Restaurant restaurant)
             {
                 var detailPage = new RestaurantDetailPage(_restaurantService, _favoriteService, restaurant);
                 await Navigation.PushAsync(detailPage);
+                RestaurantList.SelectedItem = null;
             }
         }
     }

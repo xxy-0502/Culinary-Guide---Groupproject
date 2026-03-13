@@ -91,7 +91,8 @@
         <!-- 餐厅列表 -->
         <CollectionView Grid.Row="3"
                         x:Name="RestaurantList"
-                        SelectionMode="None"
+                        SelectionMode="Single"
+                        SelectionChanged="OnRestaurantSelected"
                         Margin="0,-10,0,0">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -100,24 +101,15 @@
                             StrokeShape="RoundRectangle 16"
                             Stroke="Transparent"
                             BackgroundColor="{StaticResource CardBackground}">
-                        <Border.GestureRecognizers>
-                            <TapGestureRecognizer BindingContext="{Binding .}" Tapped="OnRestaurantClicked" />
-                        </Border.GestureRecognizers>
                         <Grid RowDefinitions="160,Auto,Auto,Auto"
                               ColumnDefinitions="*,Auto">
                             
-                            <!-- 图片轮播 -->
-                            <CarouselView Grid.Row="0"
-                                          Grid.ColumnSpan="2"
-                                          ItemsSource="{Binding ImageUrls}"
-                                          HeightRequest="160">
-                                <CarouselView.ItemTemplate>
-                                    <DataTemplate>
-                                        <Image Source="{Binding .}"
-                                               Aspect="AspectFill" />
-                                    </DataTemplate>
-                                </CarouselView.ItemTemplate>
-                            </CarouselView>
+                            <!-- 餐厅图片 -->
+                            <Image Grid.Row="0"
+                                   Grid.ColumnSpan="2"
+                                   Source="{Binding ImageUrls[0]}"
+                                   Aspect="AspectFill"
+                                   HeightRequest="160" />
                             
                             <!-- 收藏按钮 -->
                             <Border Grid.Row="0"
