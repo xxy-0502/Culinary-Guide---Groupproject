@@ -91,7 +91,8 @@
         <!-- 餐厅列表 -->
         <CollectionView Grid.Row="3"
                         x:Name="RestaurantList"
-                        SelectionMode="None"
+                        SelectionMode="Single"
+                        SelectionChanged="OnRestaurantSelected"
                         Margin="0,-10,0,0">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -108,11 +109,7 @@
                                    Grid.ColumnSpan="2"
                                    Source="{Binding ImageUrls[0]}"
                                    Aspect="AspectFill"
-                                   HeightRequest="160">
-                                <Image.GestureRecognizers>
-                                    <TapGestureRecognizer BindingContext="{Binding .}" Tapped="OnRestaurantClicked" />
-                                </Image.GestureRecognizers>
-                            </Image>
+                                   HeightRequest="160" />
                             
                             <!-- 收藏按钮 -->
                             <Border Grid.Row="0"
