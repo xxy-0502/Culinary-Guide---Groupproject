@@ -109,8 +109,10 @@
                             <!-- 图片轮播 -->
                             <CarouselView Grid.Row="0"
                                           Grid.ColumnSpan="2"
-                                          ItemsSource="{Binding ImageUrls}"
-                                          HeightRequest="160">
+                                          x:Name="RestaurantCarousel"
+                                          Position="0"
+                                          HeightRequest="160"
+                                          BindingContextChanged="OnCarouselBindingContextChanged">
                                 <CarouselView.ItemTemplate>
                                     <DataTemplate>
                                         <Image Source="{Binding .}"

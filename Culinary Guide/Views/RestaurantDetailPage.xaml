@@ -11,6 +11,7 @@
             <!-- 顶部图片轮播 -->
             <CarouselView Grid.Row="0"
                           x:Name="ImageCarousel"
+                          Position="0"
                           HeightRequest="200"
                           IndicatorView="Indicator">
                 <CarouselView.ItemTemplate>

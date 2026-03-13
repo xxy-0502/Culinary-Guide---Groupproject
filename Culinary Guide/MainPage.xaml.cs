@@ -118,5 +118,13 @@ namespace Culinary_Guide
                 await Navigation.PushAsync(detailPage);
             }
         }
+
+        private void OnCarouselBindingContextChanged(object sender, EventArgs e)
+        {
+            if (sender is CarouselView carousel && carousel.BindingContext is Restaurant restaurant)
+            {
+                carousel.ItemsSource = restaurant.ImageUrls;
+            }
+        }
     }
 }
