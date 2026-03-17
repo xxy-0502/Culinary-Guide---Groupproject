@@ -1,5 +1,7 @@
+using Culinary_Guide.Helpers;
 using Culinary_Guide.Models;
 using Culinary_Guide.Services;
+using Microsoft.Maui.Devices.Sensors;
 
 namespace Culinary_Guide.Views
 {
@@ -7,35 +9,137 @@ namespace Culinary_Guide.Views
     {
         private readonly IRestaurantService _restaurantService;
         private readonly IFavoriteService _favoriteService;
+        private readonly ILanguageService _languageService;
         private readonly List<Restaurant> _allRestaurants;
         private RestaurantMapDrawable _mapDrawable;
+        private double _currentLatitude = 39.9087;
+        private double _currentLongitude = 116.3975;
+        private bool _isRealLocation = false;
 
         public MapPage(IRestaurantService restaurantService, IFavoriteService favoriteService, List<Restaurant> allRestaurants)
         {
             _restaurantService = restaurantService;
             _favoriteService = favoriteService;
+            _languageService = MauiProgram.Services?.GetRequiredService<ILanguageService>()!;
             _allRestaurants = allRestaurants;
             InitializeComponent();
+            BindingContext = Localize.Instance;
             SetupMap();
         }
 
         private void SetupMap()
         {
-            _mapDrawable = new RestaurantMapDrawable(_allRestaurants);
+            _mapDrawable = new RestaurantMapDrawable(_allRestaurants, _currentLatitude, _currentLongitude, _isRealLocation);
             MapView.Drawable = _mapDrawable;
-            BindingContext = new MapViewModel(_allRestaurants);
+            UpdateLabels();
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
+            if (_languageService != null)
+            {
+                _languageService.LanguageChanged += OnLanguageChanged;
+            }
+            Localize.Instance.Invalidate();
             MapView.Invalidate();
+            UpdateLabels();
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            if (_languageService != null)
+            {
+                _languageService.LanguageChanged -= OnLanguageChanged;
+            }
+        }
+
+        private void OnLanguageChanged(object? sender, EventArgs e)
+        {
+            Localize.Instance.Invalidate();
+            UpdateLabels();
+        }
+
+        private void UpdateLabels()
+        {
+            var loc = Localize.Instance;
+            RestaurantCountLabel.Text = $"{_allRestaurants.Count} {loc.RestaurantCount}";
+            NoRestaurantsLayout.IsVisible = _allRestaurants.Count == 0;
+        }
+
+        private async void OnMyLocationClicked(object sender, EventArgs e)
+        {
+            var loc = Localize.Instance;
+            
+            try
+            {
+                var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+                if (status != PermissionStatus.Granted)
+                {
+                    status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+                }
+
+                if (status != PermissionStatus.Granted)
+                {
+                    await DisplayAlert(loc.Language, loc.LocationPermissionRequired, loc.OK);
+                    return;
+                }
+
+                LocationInfoLabel.Text = loc.GettingLocation;
+                LocationInfoLabel.IsVisible = true;
+
+                var request = new GeolocationRequest
+                {
+                    DesiredAccuracy = GeolocationAccuracy.Medium,
+                    Timeout = TimeSpan.FromSeconds(15)
+                };
+
+                var location = await Geolocation.Default.GetLocationAsync(request);
+
+                if (location != null)
+                {
+                    _currentLatitude = location.Latitude;
+                    _currentLongitude = location.Longitude;
+                    _isRealLocation = true;
+
+                    _mapDrawable = new RestaurantMapDrawable(_allRestaurants, _currentLatitude, _currentLongitude, _isRealLocation);
+                    MapView.Drawable = _mapDrawable;
+                    MapView.Invalidate();
+
+                    var accuracyText = location.Accuracy.HasValue 
+                        ? $"{loc.Accuracy}: {location.Accuracy.Value:F1} {loc.Meters}" 
+                        : "";
+                    
+                    LocationInfoLabel.Text = $"{loc.Latitude}: {location.Latitude:F6}\n{loc.Longitude}: {location.Longitude:F6}";
+                    LocationInfoLabel.IsVisible = true;
+
+                    await DisplayAlert(loc.CurrentLocation, 
+                        $"{loc.Latitude}: {location.Latitude:F6}\n{loc.Longitude}: {location.Longitude:F6}\n{accuracyText}", 
+                        loc.OK);
+                }
+                else
+                {
+                    LocationInfoLabel.IsVisible = false;
+                    await DisplayAlert(loc.Error, loc.CannotGetLocation, loc.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                LocationInfoLabel.IsVisible = false;
+                await DisplayAlert(loc.Error, $"{loc.GetLocationFailed}: {ex.Message}", loc.OK);
+            }
         }
 
         private async void OnFavoritesTabClicked(object sender, EventArgs e)
         {
             var favoritesPage = new FavoritesPage(_restaurantService, _favoriteService, _allRestaurants);
             await Navigation.PushAsync(favoritesPage);
+        }
+
+        private async void OnBackClicked(object sender, EventArgs e)
+        {
+            await Navigation.PopAsync();
         }
 
         private async void OnHomeTabClicked(object sender, EventArgs e)
@@ -48,25 +152,20 @@ namespace Culinary_Guide.Views
         }
     }
 
-    public class MapViewModel
-    {
-        public int RestaurantCount { get; set; }
-        public bool HasRestaurants => RestaurantCount > 0;
-
-        public MapViewModel(List<Restaurant> restaurants)
-        {
-            RestaurantCount = restaurants.Count;
-        }
-    }
-
     public class RestaurantMapDrawable : IDrawable
     {
         private readonly List<Restaurant> _restaurants;
         private readonly Random _random = new(42);
+        private readonly double _userLat;
+        private readonly double _userLon;
+        private readonly bool _isRealLocation;
 
-        public RestaurantMapDrawable(List<Restaurant> restaurants)
+        public RestaurantMapDrawable(List<Restaurant> restaurants, double userLat, double userLon, bool isRealLocation)
         {
             _restaurants = restaurants;
+            _userLat = userLat;
+            _userLon = userLon;
+            _isRealLocation = isRealLocation;
         }
 
         public void Draw(ICanvas canvas, RectF dirtyRect)
@@ -104,10 +203,14 @@ namespace Culinary_Guide.Views
             float centerX = dirtyRect.Width / 2;
             float centerY = dirtyRect.Height / 2;
 
-            canvas.FillColor = Color.FromRgba(66, 133, 244, 80);
+            canvas.FillColor = _isRealLocation 
+                ? Color.FromRgba(76, 175, 80, 80) 
+                : Color.FromRgba(66, 133, 244, 80);
             canvas.FillCircle(centerX, centerY, 30);
 
-            canvas.FillColor = Color.FromRgba(66, 133, 244, 255);
+            canvas.FillColor = _isRealLocation 
+                ? Color.FromRgba(76, 175, 80, 255) 
+                : Color.FromRgba(66, 133, 244, 255);
             canvas.FillCircle(centerX, centerY, 12);
 
             canvas.StrokeColor = Colors.White;

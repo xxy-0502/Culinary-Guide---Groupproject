@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:helpers="clr-namespace:Culinary_Guide.Helpers"
+             x:Class="Culinary_Guide.Views.ProfilePage"
+             BackgroundColor="{StaticResource Background}"
+             NavigationPage.HasNavigationBar="False">
+    
+    <Grid RowDefinitions="Auto,*,Auto" Padding="16,16,16,0">
+        
+        <!-- 自定义标题栏 -->
+        <Grid Grid.Row="0"
+              HeightRequest="56"
+              ColumnDefinitions="Auto,*,Auto"
+              Margin="0,0,0,8">
+            
+            <!-- 左侧：返回按钮 -->
+            <Border Grid.Column="0"
+                    WidthRequest="44"
+                    HeightRequest="44"
+                    StrokeShape="RoundRectangle 22"
+                    BackgroundColor="Transparent"
+                    Stroke="Transparent">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackClicked" />
+                </Border.GestureRecognizers>
+                <Label Text="←"
+                       FontSize="24"
+                       TextColor="Black"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+            </Border>
+            
+            <!-- 中间：标题 -->
+            <Label Grid.Column="1"
+                   Text="{Binding ProfileTitle}"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource TextPrimary}"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" />
+            
+            <!-- 右侧：占位 -->
+            <Border Grid.Column="2"
+                    WidthRequest="44"
+                    HeightRequest="44"
+                    BackgroundColor="Transparent"
+                    Stroke="Transparent" />
+        </Grid>
+        
+        <!-- 主要内容 -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="16">
+                
+                <!-- 用户信息区 -->
+                <Border BackgroundColor="{StaticResource CardBackground}"
+                        StrokeShape="RoundRectangle 16"
+                        Padding="20"
+                        Stroke="Transparent">
+                    <Grid ColumnDefinitions="Auto,*"
+                          RowDefinitions="Auto,Auto">
+                        
+                        <!-- 头像 -->
+                        <Border Grid.RowSpan="2"
+                                Grid.Column="0"
+                                WidthRequest="70"
+                                HeightRequest="70"
+                                StrokeShape="RoundRectangle 35"
+                                BackgroundColor="{StaticResource Primary}"
+                                Margin="0,0,16,0">
+                            <Label Text="👤"
+                                   FontSize="32"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                        </Border>
+                        
+                        <!-- 昵称 -->
+                        <Label Grid.Row="0"
+                               Grid.Column="1"
+                               Text="{Binding DefaultNickname}"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource TextPrimary}"
+                               VerticalOptions="End" />
+                        
+                        <!-- 简介 -->
+                        <Label Grid.Row="1"
+                               Grid.Column="1"
+                               Text="{Binding DefaultBio}"
+                               FontSize="14"
+                               TextColor="{StaticResource TextSecondary}"
+                               VerticalOptions="Start"
+                               Margin="0,4,0,0" />
+                    </Grid>
+                </Border>
+                
+                <!-- 统计信息 -->
+                <Grid ColumnDefinitions="*,*"
+                      ColumnSpacing="12">
+                    
+                    <!-- 收藏数 -->
+                    <Border BackgroundColor="{StaticResource CardBackground}"
+                            StrokeShape="RoundRectangle 16"
+                            Padding="16"
+                            Stroke="Transparent">
+                        <VerticalStackLayout Spacing="4">
+                            <Label x:Name="FavoriteCountLabel"
+                                   FontSize="28"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource Primary}"
+                                   HorizontalOptions="Center" />
+                            <Label Text="{Binding MyFavoritesCount}"
+                                   FontSize="14"
+                                   TextColor="{StaticResource TextSecondary}"
+                                   HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                    
+                    <!-- 浏览数 -->
+                    <Border BackgroundColor="{StaticResource CardBackground}"
+                            StrokeShape="RoundRectangle 16"
+                            Padding="16"
+                            Stroke="Transparent">
+                        <VerticalStackLayout Spacing="4">
+                            <Label x:Name="BrowseCountLabel"
+                                   FontSize="28"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource Primary}"
+                                   HorizontalOptions="Center" />
+                            <Label Text="{Binding BrowseHistoryCount}"
+                                   FontSize="14"
+                                   TextColor="{StaticResource TextSecondary}"
+                                   HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+                
+                <!-- 浏览历史 -->
+                <Border BackgroundColor="{StaticResource CardBackground}"
+                        StrokeShape="RoundRectangle 16"
+                        Padding="0"
+                        Stroke="Transparent">
+                    <VerticalStackLayout>
+                        
+                        <!-- 标题 -->
+                        <Grid Padding="16,12"
+                              ColumnDefinitions="Auto,*,Auto">
+                            <Label Grid.Column="0"
+                                   Text="📜"
+                                   FontSize="18"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="1"
+                                   Text="{Binding BrowseHistory}"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource TextPrimary}"
+                                   Margin="8,0,0,0"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="2"
+                                   Text="{Binding ViewMore, StringFormat='{0} ›'}"
+                                   FontSize="12"
+                                   TextColor="{StaticResource Distance}"
+                                   VerticalOptions="Center" />
+                        </Grid>
+                        
+                        <!-- 历史列表 -->
+                        <CollectionView x:Name="HistoryList"
+                                        HeightRequest="200">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="16,8"
+                                          ColumnDefinitions="Auto,*,Auto">
+                                        <Label Grid.Column="0"
+                                               Text="🍴"
+                                               FontSize="16"
+                                               VerticalOptions="Center" />
+                                        <Label Grid.Column="1"
+                                               Text="{Binding Name}"
+                                               FontSize="14"
+                                               TextColor="{StaticResource TextPrimary}"
+                                               Margin="12,0,0,0"
+                                               VerticalOptions="Center" />
+                                        <Label Grid.Column="2"
+                                               Text="{Binding BrowseTime}"
+                                               FontSize="12"
+                                               TextColor="{StaticResource TextSecondary}"
+                                               VerticalOptions="Center" />
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                            <CollectionView.EmptyView>
+                                <Label Text="{Binding NoBrowseHistory}"
+                                       FontSize="14"
+                                       TextColor="{StaticResource TextSecondary}"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"
+                                       Padding="20" />
+                            </CollectionView.EmptyView>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </Border>
+                
+                <!-- 设置选项 -->
+                <Border BackgroundColor="{StaticResource CardBackground}"
+                        StrokeShape="RoundRectangle 16"
+                        Padding="0"
+                        Stroke="Transparent">
+                    <VerticalStackLayout>
+                        
+                        <!-- 标题 -->
+                        <Grid Padding="16,12">
+                            <Label Text="{Binding Settings, StringFormat='⚙️ {0}'}"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource TextPrimary}" />
+                        </Grid>
+                        
+                        <!-- 语言设置 -->
+                        <Grid Padding="16,12"
+                              ColumnDefinitions="Auto,*,Auto"
+                              BackgroundColor="Transparent">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnLanguageClicked" />
+                            </Grid.GestureRecognizers>
+                            <Label Grid.Column="0"
+                                   Text="🌐"
+                                   FontSize="18"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="1"
+                                   Text="{Binding Language}"
+                                   FontSize="14"
+                                   TextColor="{StaticResource TextPrimary}"
+                                   Margin="12,0,0,0"
+                                   VerticalOptions="Center" />
+                            <Label x:Name="CurrentLanguageLabel"
+                                   Grid.Column="2"
+                                   Text="English"
+                                   FontSize="14"
+                                   TextColor="{StaticResource Distance}"
+                                   VerticalOptions="Center" />
+                        </Grid>
+                        
+                        <BoxView HeightRequest="1"
+                                 BackgroundColor="#F0F0F0"
+                                 Margin="16,0" />
+                        
+                        <!-- 通知设置 -->
+                        <Grid Padding="16,12"
+                              ColumnDefinitions="Auto,*,Auto"
+                              BackgroundColor="Transparent">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnNotificationSettingClicked" />
+                            </Grid.GestureRecognizers>
+                            <Label Grid.Column="0"
+                                   Text="🔔"
+                                   FontSize="18"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="1"
+                                   Text="{Binding NotificationSettings}"
+                                   FontSize="14"
+                                   TextColor="{StaticResource TextPrimary}"
+                                   Margin="12,0,0,0"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="2"
+                                   Text="›"
+                                   FontSize="18"
+                                   TextColor="{StaticResource TextSecondary}"
+                                   VerticalOptions="Center" />
+                        </Grid>
+                        
+                        <BoxView HeightRequest="1"
+                                 BackgroundColor="#F0F0F0"
+                                 Margin="16,0" />
+                        
+                        <!-- 隐私设置 -->
+                        <Grid Padding="16,12"
+                              ColumnDefinitions="Auto,*,Auto">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnPrivacySettingClicked" />
+                            </Grid.GestureRecognizers>
+                            <Label Grid.Column="0"
+                                   Text="🔒"
+                                   FontSize="18"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="1"
+                                   Text="{Binding PrivacySettings}"
+                                   FontSize="14"
+                                   TextColor="{StaticResource TextPrimary}"
+                                   Margin="12,0,0,0"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="2"
+                                   Text="›"
+                                   FontSize="18"
+                                   TextColor="{StaticResource TextSecondary}"
+                                   VerticalOptions="Center" />
+                        </Grid>
+                        
+                        <BoxView HeightRequest="1"
+                                 BackgroundColor="#F0F0F0"
+                                 Margin="16,0" />
+                        
+                        <!-- 关于应用 -->
+                        <Grid Padding="16,12"
+                              ColumnDefinitions="Auto,*,Auto">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnAboutClicked" />
+                            </Grid.GestureRecognizers>
+                            <Label Grid.Column="0"
+                                   Text="ℹ️"
+                                   FontSize="18"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="1"
+                                   Text="{Binding AboutApp}"
+                                   FontSize="14"
+                                   TextColor="{StaticResource TextPrimary}"
+                                   Margin="12,0,0,0"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Column="2"
+                                   Text="›"
+                                   FontSize="18"
+                                   TextColor="{StaticResource TextSecondary}"
+                                   VerticalOptions="Center" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+                
+            </VerticalStackLayout>
+        </ScrollView>
+        
+        <!-- 底部导航栏 -->
+        <Border Grid.Row="2"
+                BackgroundColor="White"
+                StrokeShape="RoundRectangle 24,24,0,0"
+                Padding="0"
+                HeightRequest="70"
+                Stroke="Transparent">
+            <Grid ColumnDefinitions="*,*,*">
+                
+                <!-- 收藏 Tab -->
+                <Grid Grid.Column="0" 
+                      x:Name="FavoritesTab"
+                      HorizontalOptions="Center" 
+                      VerticalOptions="Center">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnFavoritesTabClicked" />
+                    </Grid.GestureRecognizers>
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="❤️" 
+                               FontSize="24" 
+                               HorizontalOptions="Center"
+                               TextColor="#80000000" />
+                        <Label Text="{Binding TabFavorites}" 
+                               FontSize="12" 
+                               HorizontalOptions="Center"
+                               TextColor="#80000000" />
+                    </VerticalStackLayout>
+                </Grid>
+                
+                <!-- 首页 Tab -->
+                <Grid Grid.Column="1" 
+                      x:Name="HomeTab"
+                      HorizontalOptions="Center" 
+                      VerticalOptions="Center">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnHomeTabClicked" />
+                    </Grid.GestureRecognizers>
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="🏠" 
+                               FontSize="24" 
+                               HorizontalOptions="Center"
+                               TextColor="#80000000" />
+                        <Label Text="{Binding TabHome}" 
+                               FontSize="12" 
+                               HorizontalOptions="Center"
+                               TextColor="#80000000" />
+                    </VerticalStackLayout>
+                </Grid>
+                
+                <!-- 探索 Tab -->
+                <Grid Grid.Column="2" 
+                      x:Name="ExploreTab"
+                      HorizontalOptions="Center" 
+                      VerticalOptions="Center">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnExploreTabClicked" />
+                    </Grid.GestureRecognizers>
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="🗺️" 
+                               FontSize="24" 
+                               HorizontalOptions="Center"
+                               TextColor="#80000000" />
+                        <Label Text="{Binding TabExplore}" 
+                               FontSize="12" 
+                               HorizontalOptions="Center"
+                               TextColor="#80000000" />
+                    </VerticalStackLayout>
+                </Grid> 
+                
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>

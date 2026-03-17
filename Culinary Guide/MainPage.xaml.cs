@@ -1,3 +1,4 @@
+using Culinary_Guide.Helpers;
 using Culinary_Guide.Models;
 using Culinary_Guide.Services;
 using Culinary_Guide.Views;
@@ -8,22 +9,42 @@ namespace Culinary_Guide
     {
         private readonly IRestaurantService _restaurantService;
         private readonly IFavoriteService _favoriteService;
+        private readonly ILanguageService _languageService;
         private List<Restaurant> _allRestaurants = new();
         private SortOption _currentSort = SortOption.Distance;
         private TabType _currentTab = TabType.Home;
 
-        public MainPage(IRestaurantService restaurantService, IFavoriteService favoriteService)
+        public MainPage(IRestaurantService restaurantService, IFavoriteService favoriteService, ILanguageService languageService)
         {
             _restaurantService = restaurantService;
             _favoriteService = favoriteService;
+            _languageService = languageService;
             InitializeComponent();
+            BindingContext = Localize.Instance;
         }
 
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
         {
             base.OnAppearing();
-            await LoadRestaurants();
+            _languageService.LanguageChanged += OnLanguageChanged;
+            Localize.Instance.Invalidate();
+            _ = LoadRestaurants();
             UpdateTabStyles();
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            _languageService.LanguageChanged -= OnLanguageChanged;
+        }
+
+        private void OnLanguageChanged(object? sender, EventArgs e)
+        {
+            Localize.Instance.Invalidate();
+            UpdateSortButtonTexts();
+            var languageCode = _languageService.CurrentLanguage == AppLanguage.Chinese ? "zh-CN" : "en-US";
+            _restaurantService.UpdateLanguage(languageCode);
+            ApplySort();
         }
 
         private async Task LoadRestaurants()
@@ -35,7 +56,10 @@ namespace Culinary_Guide
             }
             catch (Exception ex)
             {
-                await DisplayAlert("错误", $"加载失败：{ex.Message}", "确定");
+                var errorMsg = _languageService.GetString("LoadFailed");
+                var ok = _languageService.GetString("OK");
+                var error = _languageService.GetString("Error");
+                await DisplayAlert(error, $"{errorMsg}{ex.Message}", ok);
             }
         }
 
@@ -98,6 +122,14 @@ namespace Culinary_Guide
             ReviewsBtn.BackgroundColor = _currentSort == SortOption.Reviews ? primaryColor : Colors.White;
         }
 
+        private void UpdateSortButtonTexts()
+        {
+            var loc = Localize.Instance;
+            DistanceLabel.Text = $"📍 {loc.SortByDistance}";
+            RatingLabel.Text = $"⭐ {loc.SortByRating}";
+            PopularLabel.Text = $"🔥 {loc.SortByPopular}";
+        }
+
         private void OnFavoriteClicked(object sender, EventArgs e)
         {
             if (sender is Border border && border.BindingContext is Restaurant restaurant)
@@ -142,6 +174,18 @@ namespace Culinary_Guide
             UpdateTabStyles();
             var mapPage = new MapPage(_restaurantService, _favoriteService, _allRestaurants);
             await Navigation.PushAsync(mapPage);
+        }
+
+        private async void OnProfileClicked(object sender, EventArgs e)
+        {
+            var profilePage = new ProfilePage(_favoriteService, _allRestaurants);
+            await Navigation.PushAsync(profilePage);
+        }
+
+        private async void OnNotificationsClicked(object sender, EventArgs e)
+        {
+            var notificationsPage = new NotificationsPage();
+            await Navigation.PushAsync(notificationsPage);
         }
 
         private void UpdateTabStyles()

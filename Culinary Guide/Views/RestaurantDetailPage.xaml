@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:helpers="clr-namespace:Culinary_Guide.Helpers"
              x:Class="Culinary_Guide.Views.RestaurantDetailPage"
              BackgroundColor="{StaticResource Background}"
-             Title="">
+             NavigationPage.HasNavigationBar="False">
     
     <ScrollView>
         <Grid RowDefinitions="200,Auto,Auto,Auto,Auto,Auto,*" Padding="0">
@@ -112,7 +113,7 @@
                 </HorizontalStackLayout>
                 
                 <!-- 评价数 -->
-                <Label Text="{Binding ReviewCount, StringFormat='{0} 条评价'}"
+                <Label x:Name="ReviewCountLabel"
                        TextColor="{StaticResource TextSecondary}"
                        FontSize="14" />
             </VerticalStackLayout>
@@ -128,7 +129,7 @@
                     <HorizontalStackLayout Spacing="12">
                         <Label Text="📍" FontSize="18" VerticalOptions="Center" />
                         <VerticalStackLayout HorizontalOptions="FillAndExpand">
-                            <Label Text="地址"
+                            <Label x:Name="AddressTitleLabel"
                                    FontAttributes="Bold"
                                    TextColor="{StaticResource TextPrimary}" />
                             <Label Text="{Binding Address}"
@@ -144,7 +145,7 @@
                     <HorizontalStackLayout Spacing="12">
                         <Label Text="📞" FontSize="18" VerticalOptions="Center" />
                         <VerticalStackLayout HorizontalOptions="FillAndExpand">
-                            <Label Text="电话"
+                            <Label x:Name="PhoneTitleLabel"
                                    FontAttributes="Bold"
                                    TextColor="{StaticResource TextPrimary}" />
                             <Label Text="{Binding Phone}"
@@ -160,7 +161,7 @@
                     <HorizontalStackLayout Spacing="12">
                         <Label Text="⏰" FontSize="18" VerticalOptions="Center" />
                         <VerticalStackLayout HorizontalOptions="FillAndExpand">
-                            <Label Text="营业时间"
+                            <Label x:Name="OpeningHoursTitleLabel"
                                    FontAttributes="Bold"
                                    TextColor="{StaticResource TextPrimary}" />
                             <Label Text="{Binding OpeningHours}"
@@ -179,7 +180,7 @@
                     BackgroundColor="{StaticResource CardBackground}"
                     Stroke="Transparent">
                 <VerticalStackLayout Spacing="8">
-                    <Label Text="📝 简介"
+                    <Label x:Name="DescriptionTitleLabel"
                            FontAttributes="Bold"
                            FontSize="18"
                            TextColor="{StaticResource TextPrimary}" />
@@ -198,7 +199,7 @@
                     BackgroundColor="{StaticResource CardBackground}"
                     Stroke="Transparent">
                 <VerticalStackLayout Spacing="12">
-                    <Label Text="💬 用户评价"
+                    <Label x:Name="UserReviewsTitleLabel"
                            FontAttributes="Bold"
                            FontSize="18"
                            TextColor="{StaticResource TextPrimary}" />
@@ -292,7 +293,7 @@
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnWriteReviewClicked" />
                 </Border.GestureRecognizers>
-                <Label Text="✍️ 写评价"
+                <Label x:Name="WriteReviewLabel"
                        TextColor="White"
                        FontSize="16"
                        FontAttributes="Bold"

@@ -1,15 +1,70 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:helpers="clr-namespace:Culinary_Guide.Helpers"
              x:Class="Culinary_Guide.MainPage"
              BackgroundColor="{StaticResource Background}"
-             Title="🍴 美食地图">
+             NavigationPage.HasNavigationBar="False">
     
-    <Grid RowDefinitions="Auto,Auto,Auto,*,Auto" Padding="16,16,16,0">
+    <ContentPage.BindingContext>
+        <helpers:Localize x:Name="Loc" />
+    </ContentPage.BindingContext>
+    
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,*,Auto" Padding="16,16,16,0">
+        
+        <!-- 自定义标题栏 -->
+        <Grid Grid.Row="0"
+              HeightRequest="56"
+              ColumnDefinitions="Auto,*,Auto"
+              Margin="0,0,0,8">
+            
+            <!-- 左侧：个人中心按钮 -->
+            <Border Grid.Column="0"
+                    WidthRequest="44"
+                    HeightRequest="44"
+                    StrokeShape="RoundRectangle 22"
+                    BackgroundColor="Transparent"
+                    Stroke="Transparent">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnProfileClicked" />
+                </Border.GestureRecognizers>
+                <Label Text="👤"
+                       FontSize="24"
+                       TextColor="Black"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+            </Border>
+            
+            <!-- 中间：标题 -->
+            <Label Grid.Column="1"
+                   Text="{Binding AppTitle, StringFormat='🍴 {0}'}"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource TextPrimary}"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" />
+            
+            <!-- 右侧：通知按钮 -->
+            <Border Grid.Column="2"
+                    WidthRequest="44"
+                    HeightRequest="44"
+                    StrokeShape="RoundRectangle 22"
+                    BackgroundColor="Transparent"
+                    Stroke="Transparent">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNotificationsClicked" />
+                </Border.GestureRecognizers>
+                <Label Text="🔔"
+                       FontSize="24"
+                       TextColor="Black"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+            </Border>
+        </Grid>
         
         <!-- 欢迎语 + 定位 -->
-        <VerticalStackLayout Grid.Row="0" Spacing="8">
-            <Label Text="今天吃什么呢？"
+        <VerticalStackLayout Grid.Row="1" Spacing="8">
+            <Label Text="{Binding WelcomeText}"
                    FontSize="24"
                    FontAttributes="Bold"
                    TextColor="{StaticResource TextPrimary}" />
@@ -19,7 +74,7 @@
                     HorizontalOptions="Start">
                 <HorizontalStackLayout Spacing="4">
                     <Label Text="📍" FontSize="16" />
-                    <Label Text="北京国贸"
+                    <Label Text="{Binding Location}"
                            TextColor="#2E7D32"
                            FontSize="14" />
                 </HorizontalStackLayout>
@@ -27,20 +82,20 @@
         </VerticalStackLayout>
         
         <!-- 搜索框 -->
-        <Border Grid.Row="1"
+        <Border Grid.Row="2"
                 Margin="0,16,0,16"
                 Padding="0"
                 StrokeShape="RoundRectangle 20"
                 Stroke="Transparent"
                 BackgroundColor="{StaticResource CardBackground}">
                     <SearchBar x:Name="SearchBar"
-                               Placeholder="🔍 搜索餐厅或菜系..."
+                               Placeholder="{Binding SearchPlaceholder}"
                                BackgroundColor="{StaticResource CardBackground}"
                                SearchButtonPressed="OnSearch" />
         </Border>
         
         <!-- 排序按钮组 -->
-        <HorizontalStackLayout Grid.Row="2"
+        <HorizontalStackLayout Grid.Row="3"
                                Spacing="12"
                                Margin="0,0,0,12">
             <Border x:Name="DistanceBtn"
@@ -50,7 +105,8 @@
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnDistanceSort" />
                 </Border.GestureRecognizers>
-                <Label Text="📍 距离"
+                <Label x:Name="DistanceLabel"
+                       Text="{Binding SortByDistance, StringFormat='📍 {0}'}"
                        TextColor="White"
                        FontSize="14"
                        HorizontalOptions="Center"
@@ -65,7 +121,8 @@
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnRatingSort" />
                 </Border.GestureRecognizers>
-                <Label Text="⭐ 评分"
+                <Label x:Name="RatingLabel"
+                       Text="{Binding SortByRating, StringFormat='⭐ {0}'}"
                        TextColor="{StaticResource Primary}"
                        FontSize="14"
                        HorizontalOptions="Center"
@@ -80,7 +137,8 @@
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnReviewsSort" />
                 </Border.GestureRecognizers>
-                <Label Text="🔥 热门"
+                <Label x:Name="PopularLabel"
+                       Text="{Binding SortByPopular, StringFormat='🔥 {0}'}"
                        TextColor="{StaticResource Primary}"
                        FontSize="14"
                        HorizontalOptions="Center"
@@ -89,7 +147,7 @@
         </HorizontalStackLayout>
         
         <!-- 餐厅列表 -->
-        <CollectionView Grid.Row="3"
+        <CollectionView Grid.Row="4"
                         x:Name="RestaurantList"
                         SelectionMode="Single"
                         SelectionChanged="OnRestaurantSelected"
@@ -181,13 +239,13 @@
                                        FontAttributes="Bold" />
                             </HorizontalStackLayout>
                             
-                            <!-- 评价数 -->
-                            <Label Grid.Row="3"
-                                   Grid.ColumnSpan="2"
-                                   Padding="16,0,16,12"
-                                   Text="{Binding ReviewCount, StringFormat='{0} 条评价 · 点击查看'}"
-                                   TextColor="{StaticResource Favorite}"
-                                   FontSize="12" />
+<!-- 评价数 -->
+                             <Label Grid.Row="3"
+                                    Grid.ColumnSpan="2"
+                                    Padding="16,0,16,12"
+                                    Text="{Binding ReviewCountFormatted}"
+                                    TextColor="{StaticResource Favorite}"
+                                    FontSize="12" />
                         </Grid>
                     </Border>
                 </DataTemplate>
@@ -195,7 +253,7 @@
         </CollectionView>
         
         <!-- 底部导航栏 -->
-        <Border Grid.Row="4"
+        <Border Grid.Row="5"
                 BackgroundColor="White"
                 StrokeShape="RoundRectangle 24,24,0,0"
                 Padding="0"
@@ -216,7 +274,7 @@
                                FontSize="24" 
                                HorizontalOptions="Center"
                                TextColor="#80000000" />
-                        <Label Text="收藏" 
+                        <Label Text="{Binding TabFavorites}" 
                                FontSize="12" 
                                HorizontalOptions="Center"
                                TextColor="#80000000" />
@@ -236,7 +294,7 @@
                                FontSize="24" 
                                HorizontalOptions="Center"
                                TextColor="#000000" />
-                        <Label Text="首页" 
+                        <Label Text="{Binding TabHome}" 
                                FontSize="12" 
                                HorizontalOptions="Center"
                                TextColor="#000000" />
@@ -256,7 +314,7 @@
                                FontSize="24" 
                                HorizontalOptions="Center"
                                TextColor="#80000000" />
-                        <Label Text="探索" 
+                        <Label Text="{Binding TabExplore}" 
                                FontSize="12" 
                                HorizontalOptions="Center"
                                TextColor="#80000000" />

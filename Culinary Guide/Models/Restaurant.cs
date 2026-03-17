@@ -8,10 +8,10 @@ namespace Culinary_Guide.Models
         public int Id { get; set; }
         
         [JsonPropertyName("name")]
-        public string Name { get; set; } = "";
+        public Dictionary<string, string> NameTranslations { get; set; } = new();
         
         [JsonPropertyName("address")]
-        public string Address { get; set; } = "";
+        public Dictionary<string, string> AddressTranslations { get; set; } = new();
         
         [JsonPropertyName("latitude")]
         public double Latitude { get; set; }
@@ -29,10 +29,10 @@ namespace Culinary_Guide.Models
         public List<string> ImageUrls { get; set; } = new();
         
         [JsonPropertyName("cuisineType")]
-        public string CuisineType { get; set; } = "";
+        public string CuisineTypeKey { get; set; } = "";
         
         [JsonPropertyName("description")]
-        public string Description { get; set; } = "";
+        public Dictionary<string, string> DescriptionTranslations { get; set; } = new();
         
         [JsonPropertyName("phone")]
         public string Phone { get; set; } = "";
@@ -41,5 +41,50 @@ namespace Culinary_Guide.Models
         public string OpeningHours { get; set; } = "";
         
         public double Distance { get; set; }
+        
+        [JsonIgnore]
+        public string Name { get; set; } = "";
+        
+        [JsonIgnore]
+        public string Address { get; set; } = "";
+        
+        [JsonIgnore]
+        public string Description { get; set; } = "";
+        
+        [JsonIgnore]
+        public string CuisineType { get; set; } = "";
+        
+        [JsonIgnore]
+        public string ReviewCountFormatted { get; set; } = "";
+        
+        public void ApplyLanguage(string languageCode, string reviewCountFormat)
+        {
+            Name = GetTranslation(NameTranslations, languageCode);
+            Address = GetTranslation(AddressTranslations, languageCode);
+            Description = GetTranslation(DescriptionTranslations, languageCode);
+            ReviewCountFormatted = string.Format(reviewCountFormat, ReviewCount);
+        }
+        
+        public void ApplyLanguage(string languageCode)
+        {
+            Name = GetTranslation(NameTranslations, languageCode);
+            Address = GetTranslation(AddressTranslations, languageCode);
+            Description = GetTranslation(DescriptionTranslations, languageCode);
+        }
+        
+        private static string GetTranslation(Dictionary<string, string> translations, string languageCode)
+        {
+            if (translations.TryGetValue(languageCode, out var translation) && !string.IsNullOrEmpty(translation))
+            {
+                return translation;
+            }
+            
+            if (translations.TryGetValue("zh-CN", out var fallback))
+            {
+                return fallback;
+            }
+            
+            return translations.Values.FirstOrDefault() ?? "";
+        }
     }
 }

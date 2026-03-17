@@ -17,8 +17,9 @@ namespace Culinary_Guide
 
             var restaurantService = services.GetRequiredService<IRestaurantService>();
             var favoriteService = services.GetRequiredService<IFavoriteService>();
+            var languageService = services.GetRequiredService<ILanguageService>();
             
-            var mainPage = new MainPage(restaurantService, favoriteService);
+            var mainPage = new MainPage(restaurantService, favoriteService, languageService);
             var navPage = new NavigationPage(mainPage);
             
             return new Window(navPage);

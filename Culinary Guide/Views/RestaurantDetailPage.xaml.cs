@@ -1,3 +1,4 @@
+using Culinary_Guide.Helpers;
 using Culinary_Guide.Models;
 using Culinary_Guide.Services;
 
@@ -7,17 +8,20 @@ namespace Culinary_Guide.Views
     {
         private readonly IRestaurantService _restaurantService;
         private readonly IFavoriteService _favoriteService;
+        private readonly ILanguageService _languageService;
         private readonly Restaurant _restaurant;
 
         public RestaurantDetailPage(IRestaurantService restaurantService, 
                                     IFavoriteService favoriteService,
                                     Restaurant restaurant)
         {
-            InitializeComponent();
             _restaurantService = restaurantService;
             _favoriteService = favoriteService;
+            _languageService = MauiProgram.Services?.GetRequiredService<ILanguageService>()!;
             _restaurant = restaurant;
+            InitializeComponent();
             BindingContext = restaurant;
+            UpdateLabels();
             UpdateFavoriteIcon();
             LoadReviews();
         }
@@ -25,10 +29,40 @@ namespace Culinary_Guide.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
+            if (_languageService != null)
+            {
+                _languageService.LanguageChanged += OnLanguageChanged;
+            }
             if (ImageCarousel.ItemsSource == null)
             {
                 ImageCarousel.ItemsSource = _restaurant.ImageUrls;
             }
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            if (_languageService != null)
+            {
+                _languageService.LanguageChanged -= OnLanguageChanged;
+            }
+        }
+
+        private void OnLanguageChanged(object? sender, EventArgs e)
+        {
+            UpdateLabels();
+        }
+
+        private void UpdateLabels()
+        {
+            var loc = Localize.Instance;
+            ReviewCountLabel.Text = string.Format(loc.ReviewCountFormat, _restaurant.ReviewCount);
+            AddressTitleLabel.Text = loc.AddressLabel;
+            PhoneTitleLabel.Text = loc.PhoneLabel;
+            OpeningHoursTitleLabel.Text = loc.OpeningHoursLabel;
+            DescriptionTitleLabel.Text = $"📝 {loc.DescriptionLabel}";
+            UserReviewsTitleLabel.Text = $"💬 {loc.UserReviewsLabel}";
+            WriteReviewLabel.Text = $"✍️ {loc.WriteReview}";
         }
 
         private async void LoadReviews()
@@ -71,10 +105,11 @@ namespace Culinary_Guide.Views
 
         private async void OnWriteReviewClicked(object sender, EventArgs e)
         {
-            var comment = await DisplayPromptAsync("写评价", "请输入您的评价：");
+            var loc = Localize.Instance;
+            var comment = await DisplayPromptAsync(loc.WriteReview, loc.EnterReview);
             if (!string.IsNullOrWhiteSpace(comment))
             {
-                var rating = await DisplayActionSheet("评分", "取消", null, "⭐⭐⭐⭐⭐", "⭐⭐⭐⭐", "⭐⭐⭐", "⭐⭐", "⭐");
+                var rating = await DisplayActionSheet(loc.Rating, loc.Cancel, null, "⭐⭐⭐⭐⭐", "⭐⭐⭐⭐", "⭐⭐⭐", "⭐⭐", "⭐");
                 var ratingValue = rating switch
                 {
                     "⭐⭐⭐⭐⭐" => 5.0,
@@ -90,16 +125,17 @@ namespace Culinary_Guide.Views
                     var newReview = new Review
                     {
                         RestaurantId = _restaurant.Id,
-                        UserName = "我",
+                        UserName = _languageService.CurrentLanguage == AppLanguage.Chinese ? "我" : "Me",
                         Comment = comment,
                         Rating = ratingValue
                     };
 
                     await _restaurantService.AddReviewAsync(newReview);
                     _restaurant.ReviewCount++;
+                    UpdateLabels();
                     LoadReviews();
                     
-                    await DisplayAlert("成功", "评价已提交！", "好的");
+                    await DisplayAlert(loc.OK, loc.ReviewSubmitted, loc.OK);
                 }
             }
         }

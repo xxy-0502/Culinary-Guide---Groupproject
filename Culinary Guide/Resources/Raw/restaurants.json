@@ -1,8 +1,14 @@
 [
   {
     "id": 1,
-    "name": "老成都川菜馆",
-    "address": "北京市朝阳区建国路 88 号",
+    "name": {
+      "zh-CN": "老成都川菜馆",
+      "en-US": "Old Chengdu Sichuan Restaurant"
+    },
+    "address": {
+      "zh-CN": "北京市朝阳区建国路 88 号",
+      "en-US": "88 Jianguo Road, Chaoyang District, Beijing"
+    },
     "latitude": 39.9042,
     "longitude": 116.4074,
     "rating": 4.8,
@@ -11,15 +17,24 @@
       "https://picsum.photos/seed/sichuan1/800/600",
       "https://picsum.photos/seed/sichuan2/800/600"
     ],
-    "cuisineType": "川菜",
-    "description": "正宗川菜，麻辣鲜香，水煮鱼和麻婆豆腐是招牌菜",
+    "cuisineType": "sichuan",
+    "description": {
+      "zh-CN": "正宗川菜，麻辣鲜香，水煮鱼和麻婆豆腐是招牌菜",
+      "en-US": "Authentic Sichuan cuisine, spicy and flavorful. Boiled fish and Mapo tofu are signature dishes."
+    },
     "phone": "010-88881111",
     "openingHours": "10:00-22:00"
   },
   {
     "id": 2,
-    "name": "广州酒家",
-    "address": "北京市朝阳区光华路 15 号",
+    "name": {
+      "zh-CN": "广州酒家",
+      "en-US": "Guangzhou Restaurant"
+    },
+    "address": {
+      "zh-CN": "北京市朝阳区光华路 15 号",
+      "en-US": "15 Guanghua Road, Chaoyang District, Beijing"
+    },
     "latitude": 39.9180,
     "longitude": 116.4590,
     "rating": 4.7,
@@ -28,15 +43,24 @@
       "https://picsum.photos/seed/cantonese1/800/600",
       "https://picsum.photos/seed/cantonese2/800/600"
     ],
-    "cuisineType": "粤菜",
-    "description": "经典粤菜，早茶点心一绝，虾饺烧卖必点",
+    "cuisineType": "cantonese",
+    "description": {
+      "zh-CN": "经典粤菜，早茶点心一绝，虾饺烧卖必点",
+      "en-US": "Classic Cantonese cuisine. Dim sum is excellent, shrimp dumplings and siu mai are must-haves."
+    },
     "phone": "010-88882222",
     "openingHours": "07:00-22:00"
   },
   {
     "id": 3,
-    "name": "西湖醋鱼楼",
-    "address": "北京市朝阳区东三环中路 39 号",
+    "name": {
+      "zh-CN": "西湖醋鱼楼",
+      "en-US": "West Lake Fish Restaurant"
+    },
+    "address": {
+      "zh-CN": "北京市朝阳区东三环中路 39 号",
+      "en-US": "39 East Third Ring Middle Road, Chaoyang District, Beijing"
+    },
     "latitude": 39.8950,
     "longitude": 116.4550,
     "rating": 4.5,
@@ -45,15 +69,24 @@
       "https://picsum.photos/seed/hangzhou1/800/600",
       "https://picsum.photos/seed/hangzhou2/800/600"
     ],
-    "cuisineType": "浙菜",
-    "description": "经典杭帮菜，西湖醋鱼一绝，口味清淡鲜美",
+    "cuisineType": "zhejiang",
+    "description": {
+      "zh-CN": "经典杭帮菜，西湖醋鱼一绝，口味清淡鲜美",
+      "en-US": "Classic Hangzhou cuisine. West Lake vinegar fish is outstanding, light and delicious."
+    },
     "phone": "010-88883333",
     "openingHours": "10:30-21:30"
   },
   {
     "id": 4,
-    "name": "湘江水饺王",
-    "address": "北京市朝阳区工体北路 13 号",
+    "name": {
+      "zh-CN": "湘江水饺王",
+      "en-US": "Xiangjiang Dumpling King"
+    },
+    "address": {
+      "zh-CN": "北京市朝阳区工体北路 13 号",
+      "en-US": "13 Gongti North Road, Chaoyang District, Beijing"
+    },
     "latitude": 39.9320,
     "longitude": 116.4450,
     "rating": 4.3,
@@ -62,15 +95,24 @@
       "https://picsum.photos/seed/hunan1/800/600",
       "https://picsum.photos/seed/hunan2/800/600"
     ],
-    "cuisineType": "湘菜",
-    "description": "湖南特色菜，剁椒鱼头和辣椒炒肉是招牌",
+    "cuisineType": "hunan",
+    "description": {
+      "zh-CN": "湖南特色菜，剁椒鱼头和辣椒炒肉是招牌",
+      "en-US": "Hunan specialty cuisine. Chopped pepper fish head and chili stir-fried pork are signature dishes."
+    },
     "phone": "010-88884444",
     "openingHours": "11:00-22:00"
   },
   {
     "id": 5,
-    "name": "北京烤鸭店",
-    "address": "北京市朝阳区建国门外大街 1 号",
+    "name": {
+      "zh-CN": "北京烤鸭店",
+      "en-US": "Beijing Roast Duck Restaurant"
+    },
+    "address": {
+      "zh-CN": "北京市朝阳区建国门外大街 1 号",
+      "en-US": "1 Jianguomenwai Avenue, Chaoyang District, Beijing"
+    },
     "latitude": 39.9080,
     "longitude": 116.4600,
     "rating": 4.6,
@@ -79,15 +121,24 @@
       "https://picsum.photos/seed/beijing1/800/600",
       "https://picsum.photos/seed/beijing2/800/600"
     ],
-    "cuisineType": "京菜",
-    "description": "正宗北京烤鸭，皮酥肉嫩，配葱丝黄瓜绝佳",
+    "cuisineType": "beijing",
+    "description": {
+      "zh-CN": "正宗北京烤鸭，皮酥肉嫩，配葱丝黄瓜绝佳",
+      "en-US": "Authentic Beijing roast duck, crispy skin and tender meat. Perfect with scallions and cucumber."
+    },
     "phone": "010-88885555",
     "openingHours": "10:00-21:30"
   },
   {
     "id": 6,
-    "name": "泰山鲁菜坊",
-    "address": "北京市朝阳区东直门外大街 42 号",
+    "name": {
+      "zh-CN": "泰山鲁菜坊",
+      "en-US": "Taishan Shandong Cuisine"
+    },
+    "address": {
+      "zh-CN": "北京市朝阳区东直门外大街 42 号",
+      "en-US": "42 Dongzhimenwai Avenue, Chaoyang District, Beijing"
+    },
     "latitude": 39.9420,
     "longitude": 116.4480,
     "rating": 4.2,
@@ -96,15 +147,24 @@
       "https://picsum.photos/seed/shandong1/800/600",
       "https://picsum.photos/seed/shandong2/800/600"
     ],
-    "cuisineType": "鲁菜",
-    "description": "传统鲁菜，葱烧海参和九转大肠是经典",
+    "cuisineType": "shandong",
+    "description": {
+      "zh-CN": "传统鲁菜，葱烧海参和九转大肠是经典",
+      "en-US": "Traditional Shandong cuisine. Braised sea cucumber with scallions and nine-turn intestine are classics."
+    },
     "phone": "010-88886666",
     "openingHours": "11:00-21:00"
   },
   {
     "id": 7,
-    "name": "蜀香园",
-    "address": "北京市朝阳区三里屯路 19 号",
+    "name": {
+      "zh-CN": "蜀香园",
+      "en-US": "Shuxiang Garden"
+    },
+    "address": {
+      "zh-CN": "北京市朝阳区三里屯路 19 号",
+      "en-US": "19 Sanlitun Road, Chaoyang District, Beijing"
+    },
     "latitude": 39.9350,
     "longitude": 116.4550,
     "rating": 4.4,
@@ -113,15 +173,24 @@
       "https://picsum.photos/seed/sichuan3/800/600",
       "https://picsum.photos/seed/sichuan4/800/600"
     ],
-    "cuisineType": "川菜",
-    "description": "新派川菜，环境优雅，辣子鸡和水煮牛肉推荐",
+    "cuisineType": "sichuan",
+    "description": {
+      "zh-CN": "新派川菜，环境优雅，辣子鸡和水煮牛肉推荐",
+      "en-US": "Modern Sichuan cuisine with elegant ambiance. Spicy chicken and boiled beef are recommended."
+    },
     "phone": "010-88887777",
     "openingHours": "11:00-22:30"
   },
   {
     "id": 8,
-    "name": "金鼎粤府",
-    "address": "北京市朝阳区建国路 93 号",
+    "name": {
+      "zh-CN": "金鼎粤府",
+      "en-US": "Golden Tripod Cantonese Mansion"
+    },
+    "address": {
+      "zh-CN": "北京市朝阳区建国路 93 号",
+      "en-US": "93 Jianguo Road, Chaoyang District, Beijing"
+    },
     "latitude": 39.9050,
     "longitude": 116.5200,
     "rating": 4.9,
@@ -130,15 +199,24 @@
       "https://picsum.photos/seed/cantonese3/800/600",
       "https://picsum.photos/seed/cantonese4/800/600"
     ],
-    "cuisineType": "粤菜",
-    "description": "高端粤菜，鲍参翅肚，商务宴请首选",
+    "cuisineType": "cantonese",
+    "description": {
+      "zh-CN": "高端粤菜，鲍参翅肚，商务宴请首选",
+      "en-US": "High-end Cantonese cuisine. Abalone, sea cucumber, shark fin and fish maw. Perfect for business dining."
+    },
     "phone": "010-88888888",
     "openingHours": "11:30-22:00"
   },
   {
     "id": 9,
-    "name": "江南小馆",
-    "address": "北京市朝阳区工体东路 1 号",
+    "name": {
+      "zh-CN": "江南小馆",
+      "en-US": "Jiangnan Bistro"
+    },
+    "address": {
+      "zh-CN": "北京市朝阳区工体东路 1 号",
+      "en-US": "1 Gongti East Road, Chaoyang District, Beijing"
+    },
     "latitude": 39.9280,
     "longitude": 116.4400,
     "rating": 4.1,
@@ -147,15 +225,24 @@
       "https://picsum.photos/seed/jiangnan1/800/600",
       "https://picsum.photos/seed/jiangnan2/800/600"
     ],
-    "cuisineType": "浙菜",
-    "description": "江南风味，龙井虾仁和东坡肉是特色",
+    "cuisineType": "zhejiang",
+    "description": {
+      "zh-CN": "江南风味，龙井虾仁和东坡肉是特色",
+      "en-US": "Jiangnan style cuisine. Longjing shrimp and Dongpo pork are specialties."
+    },
     "phone": "010-88889999",
     "openingHours": "10:30-21:00"
   },
   {
     "id": 10,
-    "name": "火辣辣湘菜",
-    "address": "北京市朝阳区朝外大街 6 号",
+    "name": {
+      "zh-CN": "火辣辣湘菜",
+      "en-US": "Fiery Hunan Cuisine"
+    },
+    "address": {
+      "zh-CN": "北京市朝阳区朝外大街 6 号",
+      "en-US": "6 Chaowai Street, Chaoyang District, Beijing"
+    },
     "latitude": 39.9220,
     "longitude": 116.4380,
     "rating": 4.5,
@@ -164,15 +251,24 @@
       "https://picsum.photos/seed/hunan3/800/600",
       "https://picsum.photos/seed/hunan4/800/600"
     ],
-    "cuisineType": "湘菜",
-    "description": "地道湘味，香辣过瘾，小炒黄牛肉一绝",
+    "cuisineType": "hunan",
+    "description": {
+      "zh-CN": "地道湘味，香辣过瘾，小炒黄牛肉一绝",
+      "en-US": "Authentic Hunan flavor, spicy and satisfying. Stir-fried beef is outstanding."
+    },
     "phone": "010-88890000",
     "openingHours": "11:00-22:00"
   },
   {
     "id": 11,
-    "name": "全聚德分店",
-    "address": "北京市朝阳区王府井大街 138 号",
+    "name": {
+      "zh-CN": "全聚德分店",
+      "en-US": "Quanjude Branch"
+    },
+    "address": {
+      "zh-CN": "北京市朝阳区王府井大街 138 号",
+      "en-US": "138 Wangfujing Street, Chaoyang District, Beijing"
+    },
     "latitude": 39.9150,
     "longitude": 116.4120,
     "rating": 4.7,
@@ -181,15 +277,24 @@
       "https://picsum.photos/seed/duck1/800/600",
       "https://picsum.photos/seed/duck2/800/600"
     ],
-    "cuisineType": "京菜",
-    "description": "百年老字号，挂炉烤鸭，皮脆肉嫩",
+    "cuisineType": "beijing",
+    "description": {
+      "zh-CN": "百年老字号，挂炉烤鸭，皮脆肉嫩",
+      "en-US": "Century-old brand. Roast duck cooked in a hung oven, crispy skin and tender meat."
+    },
     "phone": "010-88891111",
     "openingHours": "10:00-21:00"
   },
   {
     "id": 12,
-    "name": "孔府家宴",
-    "address": "北京市朝阳区大望路 8 号",
+    "name": {
+      "zh-CN": "孔府家宴",
+      "en-US": "Confucius Family Banquet"
+    },
+    "address": {
+      "zh-CN": "北京市朝阳区大望路 8 号",
+      "en-US": "8 Dawang Road, Chaoyang District, Beijing"
+    },
     "latitude": 39.9080,
     "longitude": 116.4750,
     "rating": 4.0,
@@ -198,15 +303,24 @@
       "https://picsum.photos/seed/confucius1/800/600",
       "https://picsum.photos/seed/confucius2/800/600"
     ],
-    "cuisineType": "鲁菜",
-    "description": "孔府菜系，文化底蕴深厚，一品锅必尝",
+    "cuisineType": "shandong",
+    "description": {
+      "zh-CN": "孔府菜系，文化底蕴深厚，一品锅必尝",
+      "en-US": "Confucius family cuisine with rich cultural heritage. Yipin pot is a must-try."
+    },
     "phone": "010-88892222",
     "openingHours": "11:00-21:30"
   },
   {
     "id": 13,
-    "name": "麻辣诱惑",
-    "address": "北京市朝阳区光华东路 9 号",
+    "name": {
+      "zh-CN": "麻辣诱惑",
+      "en-US": "Spicy Temptation"
+    },
+    "address": {
+      "zh-CN": "北京市朝阳区光华东路 9 号",
+      "en-US": "9 Guanghua East Road, Chaoyang District, Beijing"
+    },
     "latitude": 39.9120,
     "longitude": 116.4650,
     "rating": 4.6,
@@ -215,15 +329,24 @@
       "https://picsum.photos/seed/mala1/800/600",
       "https://picsum.photos/seed/mala2/800/600"
     ],
-    "cuisineType": "川菜",
-    "description": "麻辣鲜香，毛血旺和夫妻肺片是招牌",
+    "cuisineType": "sichuan",
+    "description": {
+      "zh-CN": "麻辣鲜香，毛血旺和夫妻肺片是招牌",
+      "en-US": "Spicy and fragrant. Maoxuewang and sliced beef in chili sauce are signature dishes."
+    },
     "phone": "010-88893333",
     "openingHours": "11:00-23:00"
   },
   {
     "id": 14,
-    "name": "陶陶居",
-    "address": "北京市朝阳区东四环中路 39 号",
+    "name": {
+      "zh-CN": "陶陶居",
+      "en-US": "Tao Tao Ju"
+    },
+    "address": {
+      "zh-CN": "北京市朝阳区东四环中路 39 号",
+      "en-US": "39 East Fourth Ring Middle Road, Chaoyang District, Beijing"
+    },
     "latitude": 39.8900,
     "longitude": 116.4850,
     "rating": 4.8,
@@ -232,15 +355,24 @@
       "https://picsum.photos/seed/taotao1/800/600",
       "https://picsum.photos/seed/taotao2/800/600"
     ],
-    "cuisineType": "粤菜",
-    "description": "广式早茶，虾饺皇和流沙包必点",
+    "cuisineType": "cantonese",
+    "description": {
+      "zh-CN": "广式早茶，虾饺皇和流沙包必点",
+      "en-US": "Cantonese dim sum. Crystal shrimp dumplings and salted egg yolk custard buns are must-haves."
+    },
     "phone": "010-88894444",
     "openingHours": "08:00-22:00"
   },
   {
     "id": 15,
-    "name": "意法西餐厅",
-    "address": "北京市朝阳区建国路 91 号",
+    "name": {
+      "zh-CN": "意法西餐厅",
+      "en-US": "ItaFrench Restaurant"
+    },
+    "address": {
+      "zh-CN": "北京市朝阳区建国路 91 号",
+      "en-US": "91 Jianguo Road, Chaoyang District, Beijing"
+    },
     "latitude": 39.9060,
     "longitude": 116.4700,
     "rating": 4.4,
@@ -249,8 +381,11 @@
       "https://picsum.photos/seed/western1/800/600",
       "https://picsum.photos/seed/western2/800/600"
     ],
-    "cuisineType": "西餐",
-    "description": "意式风情，牛排和意面正宗，浪漫约会地",
+    "cuisineType": "western",
+    "description": {
+      "zh-CN": "意式风情，牛排和意面正宗，浪漫约会地",
+      "en-US": "Italian style. Authentic steak and pasta. Perfect for romantic dates."
+    },
     "phone": "010-88895555",
     "openingHours": "11:30-22:30"
   }

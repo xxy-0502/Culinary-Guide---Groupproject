@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  
+  <!-- App Title -->
+  <data name="AppTitle" xml:space="preserve">
+    <value>美食地图</value>
+  </data>
+  
+  <!-- MainPage -->
+  <data name="WelcomeText" xml:space="preserve">
+    <value>今天吃什么呢？</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>北京国贸</value>
+  </data>
+  <data name="SearchPlaceholder" xml:space="preserve">
+    <value>搜索餐厅或菜系...</value>
+  </data>
+  <data name="SortByDistance" xml:space="preserve">
+    <value>距离</value>
+  </data>
+  <data name="SortByRating" xml:space="preserve">
+    <value>评分</value>
+  </data>
+  <data name="SortByPopular" xml:space="preserve">
+    <value>热门</value>
+  </data>
+  <data name="ReviewsCount" xml:space="preserve">
+    <value>条评价 · 点击查看</value>
+  </data>
+  
+  <!-- Bottom Navigation -->
+  <data name="TabFavorites" xml:space="preserve">
+    <value>收藏</value>
+  </data>
+  <data name="TabHome" xml:space="preserve">
+    <value>首页</value>
+  </data>
+  <data name="TabExplore" xml:space="preserve">
+    <value>探索</value>
+  </data>
+  
+  <!-- FavoritesPage -->
+  <data name="FavoritesTitle" xml:space="preserve">
+    <value>我的收藏</value>
+  </data>
+  <data name="NoFavorites" xml:space="preserve">
+    <value>还没有收藏任何餐厅</value>
+  </data>
+  <data name="GoDiscover" xml:space="preserve">
+    <value>去首页发现美食吧！</value>
+  </data>
+  
+  <!-- MapPage -->
+  <data name="ExploreTitle" xml:space="preserve">
+    <value>探索附近</value>
+  </data>
+  <data name="MyLocation" xml:space="preserve">
+    <value>我的位置</value>
+  </data>
+  <data name="RestaurantCount" xml:space="preserve">
+    <value>家餐厅</value>
+  </data>
+  <data name="NoNearbyRestaurants" xml:space="preserve">
+    <value>附近暂无餐厅</value>
+  </data>
+  
+  <!-- ProfilePage -->
+  <data name="ProfileTitle" xml:space="preserve">
+    <value>个人中心</value>
+  </data>
+  <data name="DefaultNickname" xml:space="preserve">
+    <value>美食爱好者</value>
+  </data>
+  <data name="DefaultBio" xml:space="preserve">
+    <value>探索美食，享受生活</value>
+  </data>
+  <data name="MyFavoritesCount" xml:space="preserve">
+    <value>我的收藏</value>
+  </data>
+  <data name="BrowseHistoryCount" xml:space="preserve">
+    <value>浏览记录</value>
+  </data>
+  <data name="BrowseHistory" xml:space="preserve">
+    <value>浏览历史</value>
+  </data>
+  <data name="ViewMore" xml:space="preserve">
+    <value>查看更多</value>
+  </data>
+  <data name="NoBrowseHistory" xml:space="preserve">
+    <value>暂无浏览记录</value>
+  </data>
+  
+  <!-- Settings -->
+  <data name="Settings" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>语言</value>
+  </data>
+  <data name="Chinese" xml:space="preserve">
+    <value>中文</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="NotificationSettings" xml:space="preserve">
+    <value>通知设置</value>
+  </data>
+  <data name="PrivacySettings" xml:space="preserve">
+    <value>隐私设置</value>
+  </data>
+  <data name="AboutApp" xml:space="preserve">
+    <value>关于应用</value>
+  </data>
+  <data name="AboutAppContent" xml:space="preserve">
+    <value>美食地图 v1.0
+
+探索附近美食，记录美味生活！</value>
+  </data>
+  <data name="Developing" xml:space="preserve">
+    <value>功能开发中...</value>
+  </data>
+  
+  <!-- NotificationsPage -->
+  <data name="NotificationsTitle" xml:space="preserve">
+    <value>通知中心</value>
+  </data>
+  <data name="NoNotifications" xml:space="preserve">
+    <value>暂无新通知</value>
+  </data>
+  <data name="WelcomeNotification" xml:space="preserve">
+    <value>欢迎来到美食地图</value>
+  </data>
+  <data name="WelcomeNotificationContent" xml:space="preserve">
+    <value>探索附近美食，记录美味生活！</value>
+  </data>
+  <data name="NewFeatureNotification" xml:space="preserve">
+    <value>新功能上线</value>
+  </data>
+  <data name="NewFeatureNotificationContent" xml:space="preserve">
+    <value>地图功能已上线，快来探索附近美食吧！</value>
+  </data>
+  <data name="FavoriteNotification" xml:space="preserve">
+    <value>收藏提醒</value>
+  </data>
+  <data name="FavoriteNotificationContent" xml:space="preserve">
+    <value>您收藏的餐厅有新优惠活动</value>
+  </data>
+  
+  <!-- RestaurantDetailPage -->
+  <data name="WriteReview" xml:space="preserve">
+    <value>写评价</value>
+  </data>
+  <data name="EnterReview" xml:space="preserve">
+    <value>请输入您的评价：</value>
+  </data>
+  <data name="Rating" xml:space="preserve">
+    <value>评分</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="ReviewSubmitted" xml:space="preserve">
+    <value>评价已提交！</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>错误</value>
+  </data>
+  <data name="LoadFailed" xml:space="preserve">
+    <value>加载失败：</value>
+  </data>
+  
+  <!-- Common -->
+  <data name="Back" xml:space="preserve">
+    <value>返回</value>
+  </data>
+  
+  <!-- GPS Location -->
+  <data name="CurrentLocation" xml:space="preserve">
+    <value>当前位置</value>
+  </data>
+  <data name="Latitude" xml:space="preserve">
+    <value>纬度</value>
+  </data>
+  <data name="Longitude" xml:space="preserve">
+    <value>经度</value>
+  </data>
+  <data name="Accuracy" xml:space="preserve">
+    <value>精度</value>
+  </data>
+  <data name="LocationPermissionRequired" xml:space="preserve">
+    <value>需要位置权限才能获取您的位置</value>
+  </data>
+  <data name="CannotGetLocation" xml:space="preserve">
+    <value>无法获取当前位置</value>
+  </data>
+  <data name="GetLocationFailed" xml:space="preserve">
+    <value>获取位置失败</value>
+  </data>
+  <data name="Meters" xml:space="preserve">
+    <value>米</value>
+  </data>
+  <data name="GettingLocation" xml:space="preserve">
+    <value>正在获取位置...</value>
+  </data>
+  
+  <!-- 菜系类型 -->
+  <data name="Cuisine_Sichuan" xml:space="preserve">
+    <value>川菜</value>
+  </data>
+  <data name="Cuisine_Cantonese" xml:space="preserve">
+    <value>粤菜</value>
+  </data>
+  <data name="Cuisine_Zhejiang" xml:space="preserve">
+    <value>浙菜</value>
+  </data>
+  <data name="Cuisine_Hunan" xml:space="preserve">
+    <value>湘菜</value>
+  </data>
+  <data name="Cuisine_Beijing" xml:space="preserve">
+    <value>京菜</value>
+  </data>
+  <data name="Cuisine_Shandong" xml:space="preserve">
+    <value>鲁菜</value>
+  </data>
+  <data name="Cuisine_Western" xml:space="preserve">
+    <value>西餐</value>
+  </data>
+  
+  <!-- 餐厅详情标签 -->
+  <data name="ReviewCountFormat" xml:space="preserve">
+    <value>{0} 条评价</value>
+  </data>
+  <data name="ReviewCountTapFormat" xml:space="preserve">
+    <value>{0} 条评价 · 点击查看</value>
+  </data>
+  <data name="AddressLabel" xml:space="preserve">
+    <value>地址</value>
+  </data>
+  <data name="PhoneLabel" xml:space="preserve">
+    <value>电话</value>
+  </data>
+  <data name="OpeningHoursLabel" xml:space="preserve">
+    <value>营业时间</value>
+  </data>
+  <data name="DescriptionLabel" xml:space="preserve">
+    <value>简介</value>
+  </data>
+  <data name="UserReviewsLabel" xml:space="preserve">
+    <value>用户评价</value>
+  </data>
+</root>

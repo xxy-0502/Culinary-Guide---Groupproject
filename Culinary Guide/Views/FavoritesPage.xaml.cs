@@ -1,3 +1,4 @@
+using Culinary_Guide.Helpers;
 using Culinary_Guide.Models;
 using Culinary_Guide.Services;
 
@@ -7,6 +8,7 @@ namespace Culinary_Guide.Views
     {
         private readonly IRestaurantService _restaurantService;
         private readonly IFavoriteService _favoriteService;
+        private readonly ILanguageService _languageService;
         private readonly List<Restaurant> _allRestaurants;
         private List<Restaurant> _favoriteRestaurants = new();
 
@@ -14,14 +16,35 @@ namespace Culinary_Guide.Views
         {
             _restaurantService = restaurantService;
             _favoriteService = favoriteService;
+            _languageService = MauiProgram.Services?.GetRequiredService<ILanguageService>()!;
             _allRestaurants = allRestaurants;
             InitializeComponent();
+            BindingContext = Localize.Instance;
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
+            if (_languageService != null)
+            {
+                _languageService.LanguageChanged += OnLanguageChanged;
+            }
+            Localize.Instance.Invalidate();
             LoadFavorites();
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            if (_languageService != null)
+            {
+                _languageService.LanguageChanged -= OnLanguageChanged;
+            }
+        }
+
+        private void OnLanguageChanged(object? sender, EventArgs e)
+        {
+            Localize.Instance.Invalidate();
         }
 
         private void LoadFavorites()
@@ -52,8 +75,13 @@ namespace Culinary_Guide.Views
             }
         }
 
-        private async void OnFavoritesTabClicked(object sender, EventArgs e)
+        private void OnFavoritesTabClicked(object sender, EventArgs e)
         {
+        }
+
+        private async void OnBackClicked(object sender, EventArgs e)
+        {
+            await Navigation.PopAsync();
         }
 
         private async void OnHomeTabClicked(object sender, EventArgs e)

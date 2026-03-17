@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:helpers="clr-namespace:Culinary_Guide.Helpers"
-             x:Class="Culinary_Guide.Views.MapPage"
+             x:Class="Culinary_Guide.Views.NotificationsPage"
              BackgroundColor="{StaticResource Background}"
              NavigationPage.HasNavigationBar="False">
     
@@ -33,7 +33,7 @@
             
             <!-- 中间：标题 -->
             <Label Grid.Column="1"
-                   Text="{Binding ExploreTitle, StringFormat='🗺️ {0}'}"
+                   Text="{Binding NotificationsTitle}"
                    FontSize="18"
                    FontAttributes="Bold"
                    TextColor="{StaticResource TextPrimary}"
@@ -48,76 +48,60 @@
                     Stroke="Transparent" />
         </Grid>
         
-        <!-- 模拟地图区域 -->
-        <Border Grid.Row="1"
-                StrokeShape="RoundRectangle 16"
-                BackgroundColor="#E8F5E9"
-                Stroke="Transparent">
-            <Grid>
-                
-                <!-- 模拟地图背景 -->
-                <GraphicsView x:Name="MapView"
-                              BackgroundColor="#E8F5E9" />
-                
-                <!-- 地图提示 -->
+        <!-- 通知列表 -->
+        <CollectionView Grid.Row="1"
+                        x:Name="NotificationsList">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="0,0,0,12"
+                            Padding="16"
+                            StrokeShape="RoundRectangle 16"
+                            BackgroundColor="{StaticResource CardBackground}"
+                            Stroke="Transparent">
+                        <Grid ColumnDefinitions="Auto,*"
+                              RowDefinitions="Auto,Auto">
+                            
+                            <!-- 图标 -->
+                            <Label Grid.RowSpan="2"
+                                   Grid.Column="0"
+                                   Text="{Binding Icon}"
+                                   FontSize="24"
+                                   VerticalOptions="Center"
+                                   Margin="0,0,12,0" />
+                            
+                            <!-- 标题 -->
+                            <Label Grid.Row="0"
+                                   Grid.Column="1"
+                                   Text="{Binding Title}"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource TextPrimary}" />
+                            
+                            <!-- 内容 -->
+                            <Label Grid.Row="1"
+                                   Grid.Column="1"
+                                   Text="{Binding Content}"
+                                   FontSize="14"
+                                   TextColor="{StaticResource TextSecondary}"
+                                   Margin="0,4,0,0" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.EmptyView>
                 <VerticalStackLayout HorizontalOptions="Center"
                                      VerticalOptions="Center"
-                                     Spacing="8"
-                                     x:Name="NoRestaurantsLayout">
-                    <Label Text="🗺️"
+                                     Spacing="16">
+                    <Label Text="🔔"
                            FontSize="48"
                            HorizontalOptions="Center" />
-                    <Label Text="{Binding NoNearbyRestaurants}"
+                    <Label Text="{Binding NoNotifications}"
                            FontSize="18"
                            TextColor="{StaticResource TextSecondary}"
                            HorizontalOptions="Center" />
                 </VerticalStackLayout>
-                
-                <!-- 图例 - 可点击获取GPS位置 -->
-                <Border BackgroundColor="White"
-                        Padding="12,8"
-                        StrokeShape="RoundRectangle 8"
-                        HorizontalOptions="Start"
-                        VerticalOptions="Start"
-                        Margin="16"
-                        Stroke="Transparent">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnMyLocationClicked" />
-                    </Border.GestureRecognizers>
-                    <VerticalStackLayout Spacing="4">
-                        <HorizontalStackLayout Spacing="8">
-                            <Label Text="📍" FontSize="14" />
-                            <Label Text="{Binding MyLocation}"
-                                   FontSize="12"
-                                   TextColor="{StaticResource TextSecondary}"
-                                   VerticalOptions="Center" />
-                        </HorizontalStackLayout>
-                        <Label x:Name="LocationInfoLabel"
-                               FontSize="10"
-                               TextColor="{StaticResource Distance}"
-                               IsVisible="False" />
-                    </VerticalStackLayout>
-                </Border>
-                
-                <!-- 餐厅数量提示 -->
-                <Border BackgroundColor="White"
-                        Padding="12,8"
-                        StrokeShape="RoundRectangle 8"
-                        HorizontalOptions="End"
-                        VerticalOptions="Start"
-                        Margin="16"
-                        Stroke="Transparent">
-                    <HorizontalStackLayout Spacing="4">
-                        <Label Text="🍴" FontSize="14" />
-                        <Label x:Name="RestaurantCountLabel"
-                               FontSize="12"
-                               TextColor="{StaticResource TextSecondary}"
-                               VerticalOptions="Center" />
-                    </HorizontalStackLayout>
-                </Border>
-                
-            </Grid>
-        </Border>
+            </CollectionView.EmptyView>
+        </CollectionView>
         
         <!-- 底部导航栏 -->
         <Border Grid.Row="2"
@@ -168,7 +152,7 @@
                     </VerticalStackLayout>
                 </Grid>
                 
-                <!-- 探索 Tab (当前选中) -->
+                <!-- 探索 Tab -->
                 <Grid Grid.Column="2" 
                       x:Name="ExploreTab"
                       HorizontalOptions="Center" 
@@ -180,11 +164,11 @@
                         <Label Text="🗺️" 
                                FontSize="24" 
                                HorizontalOptions="Center"
-                               TextColor="#000000" />
+                               TextColor="#80000000" />
                         <Label Text="{Binding TabExplore}" 
                                FontSize="12" 
                                HorizontalOptions="Center"
-                               TextColor="#000000" />
+                               TextColor="#80000000" />
                     </VerticalStackLayout>
                 </Grid>
                 

@@ -23,6 +23,7 @@ namespace Culinary_Guide
             builder.Services.AddSingleton<ILocationService, SimulatedLocationService>();
             builder.Services.AddSingleton<IImageCacheService, ImageCacheService>();
             builder.Services.AddSingleton<IFavoriteService, InMemoryFavoriteService>();
+            builder.Services.AddSingleton<ILanguageService, LanguageService>();
             builder.Services.AddSingleton<IRestaurantService, RestaurantService>();
 
             builder.Services.AddTransient<MainPage>();

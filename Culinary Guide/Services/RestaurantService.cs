@@ -10,17 +10,21 @@ namespace Culinary_Guide.Services
         Task<List<Review>> GetReviewsAsync(int restaurantId);
         Task AddReviewAsync(Review review);
         Task AddLikeToReviewAsync(int reviewId);
+        void UpdateLanguage(string languageCode);
     }
 
     public class RestaurantService : IRestaurantService
     {
         private readonly ILocationService _locationService;
+        private readonly ILanguageService _languageService;
         private List<Restaurant> _restaurants = new();
         private Dictionary<int, List<Review>> _reviews = new();
+        private string _currentLanguage = "en-US";
 
-        public RestaurantService(ILocationService locationService)
+        public RestaurantService(ILocationService locationService, ILanguageService languageService)
         {
             _locationService = locationService;
+            _languageService = languageService;
             InitializeReviews();
         }
 
@@ -89,6 +93,14 @@ namespace Culinary_Guide.Services
                 using var reader = new StreamReader(stream);
                 var json = await reader.ReadToEndAsync();
                 _restaurants = JsonSerializer.Deserialize<List<Restaurant>>(json) ?? new List<Restaurant>();
+                
+                var languageCode = _languageService.CurrentLanguage == AppLanguage.Chinese ? "zh-CN" : "en-US";
+                var reviewCountFormat = _languageService.GetString("ReviewCountTapFormat");
+                foreach (var restaurant in _restaurants)
+                {
+                    restaurant.ApplyLanguage(languageCode, reviewCountFormat);
+                    restaurant.CuisineType = GetCuisineTypeDisplay(restaurant.CuisineTypeKey);
+                }
             }
             catch (Exception ex)
             {
@@ -126,6 +138,32 @@ namespace Culinary_Guide.Services
                 }
             }
             return Task.CompletedTask;
+        }
+
+        public void UpdateLanguage(string languageCode)
+        {
+            _currentLanguage = languageCode;
+            var reviewCountFormat = _languageService.GetString("ReviewCountTapFormat");
+            foreach (var restaurant in _restaurants)
+            {
+                restaurant.ApplyLanguage(languageCode, reviewCountFormat);
+                restaurant.CuisineType = GetCuisineTypeDisplay(restaurant.CuisineTypeKey);
+            }
+        }
+
+        private string GetCuisineTypeDisplay(string key)
+        {
+            return key?.ToLower() switch
+            {
+                "sichuan" => _languageService.GetString("Cuisine_Sichuan"),
+                "cantonese" => _languageService.GetString("Cuisine_Cantonese"),
+                "zhejiang" => _languageService.GetString("Cuisine_Zhejiang"),
+                "hunan" => _languageService.GetString("Cuisine_Hunan"),
+                "beijing" => _languageService.GetString("Cuisine_Beijing"),
+                "shandong" => _languageService.GetString("Cuisine_Shandong"),
+                "western" => _languageService.GetString("Cuisine_Western"),
+                _ => key ?? ""
+            };
         }
     }
 }

@@ -1,14 +1,55 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:helpers="clr-namespace:Culinary_Guide.Helpers"
              x:Class="Culinary_Guide.Views.FavoritesPage"
              BackgroundColor="{StaticResource Background}"
-             Title="❤️ 我的收藏">
+             NavigationPage.HasNavigationBar="False">
     
-    <Grid RowDefinitions="*,Auto" Padding="16,16,16,0">
+    <Grid RowDefinitions="Auto,*,Auto" Padding="16,16,16,0">
+        
+        <!-- 自定义标题栏 -->
+        <Grid Grid.Row="0"
+              HeightRequest="56"
+              ColumnDefinitions="Auto,*,Auto"
+              Margin="0,0,0,8">
+            
+            <!-- 左侧：返回按钮 -->
+            <Border Grid.Column="0"
+                    WidthRequest="44"
+                    HeightRequest="44"
+                    StrokeShape="RoundRectangle 22"
+                    BackgroundColor="Transparent"
+                    Stroke="Transparent">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackClicked" />
+                </Border.GestureRecognizers>
+                <Label Text="←"
+                       FontSize="24"
+                       TextColor="Black"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+            </Border>
+            
+            <!-- 中间：标题 -->
+            <Label Grid.Column="1"
+                   Text="{Binding FavoritesTitle, StringFormat='❤️ {0}'}"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource TextPrimary}"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" />
+            
+            <!-- 右侧：占位 -->
+            <Border Grid.Column="2"
+                    WidthRequest="44"
+                    HeightRequest="44"
+                    BackgroundColor="Transparent"
+                    Stroke="Transparent" />
+        </Grid>
         
         <!-- 收藏列表 -->
-        <CollectionView Grid.Row="0"
+        <CollectionView Grid.Row="1"
                         x:Name="FavoritesList"
                         SelectionMode="Single"
                         SelectionChanged="OnRestaurantSelected">
@@ -118,11 +159,11 @@
                     <Label Text="💔"
                            FontSize="48"
                            HorizontalOptions="Center" />
-                    <Label Text="还没有收藏任何餐厅"
+                    <Label Text="{Binding NoFavorites}"
                            FontSize="18"
                            TextColor="{StaticResource TextSecondary}"
                            HorizontalOptions="Center" />
-                    <Label Text="去首页发现美食吧！"
+                    <Label Text="{Binding GoDiscover}"
                            FontSize="14"
                            TextColor="{StaticResource Distance}"
                            HorizontalOptions="Center" />
@@ -131,7 +172,7 @@
         </CollectionView>
         
         <!-- 底部导航栏 -->
-        <Border Grid.Row="1"
+        <Border Grid.Row="2"
                 BackgroundColor="White"
                 StrokeShape="RoundRectangle 24,24,0,0"
                 Padding="0"
@@ -152,7 +193,7 @@
                                FontSize="24" 
                                HorizontalOptions="Center"
                                TextColor="#000000" />
-                        <Label Text="收藏" 
+                        <Label Text="{Binding TabFavorites}" 
                                FontSize="12" 
                                HorizontalOptions="Center"
                                TextColor="#000000" />
@@ -172,7 +213,7 @@
                                FontSize="24" 
                                HorizontalOptions="Center"
                                TextColor="#80000000" />
-                        <Label Text="首页" 
+                        <Label Text="{Binding TabHome}" 
                                FontSize="12" 
                                HorizontalOptions="Center"
                                TextColor="#80000000" />
@@ -192,7 +233,7 @@
                                FontSize="24" 
                                HorizontalOptions="Center"
                                TextColor="#80000000" />
-                        <Label Text="探索" 
+                        <Label Text="{Binding TabExplore}" 
                                FontSize="12" 
                                HorizontalOptions="Center"
                                TextColor="#80000000" />
