@@ -81,6 +81,24 @@ namespace Culinary_Guide.Resources {
         }
         
         /// <summary>
+        ///   查找类似 Accuracy 的本地化字符串。
+        /// </summary>
+        public static string Accuracy {
+            get {
+                return ResourceManager.GetString("Accuracy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Address 的本地化字符串。
+        /// </summary>
+        public static string AddressLabel {
+            get {
+                return ResourceManager.GetString("AddressLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Culinary Guide 的本地化字符串。
         /// </summary>
         public static string AppTitle {
@@ -126,11 +144,92 @@ namespace Culinary_Guide.Resources {
         }
         
         /// <summary>
+        ///   查找类似 Cannot get current location 的本地化字符串。
+        /// </summary>
+        public static string CannotGetLocation {
+            get {
+                return ResourceManager.GetString("CannotGetLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Chinese 的本地化字符串。
         /// </summary>
         public static string Chinese {
             get {
                 return ResourceManager.GetString("Chinese", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Beijing Cuisine 的本地化字符串。
+        /// </summary>
+        public static string Cuisine_Beijing {
+            get {
+                return ResourceManager.GetString("Cuisine_Beijing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Cantonese Cuisine 的本地化字符串。
+        /// </summary>
+        public static string Cuisine_Cantonese {
+            get {
+                return ResourceManager.GetString("Cuisine_Cantonese", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Hunan Cuisine 的本地化字符串。
+        /// </summary>
+        public static string Cuisine_Hunan {
+            get {
+                return ResourceManager.GetString("Cuisine_Hunan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Shandong Cuisine 的本地化字符串。
+        /// </summary>
+        public static string Cuisine_Shandong {
+            get {
+                return ResourceManager.GetString("Cuisine_Shandong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Sichuan Cuisine 的本地化字符串。
+        /// </summary>
+        public static string Cuisine_Sichuan {
+            get {
+                return ResourceManager.GetString("Cuisine_Sichuan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Western Cuisine 的本地化字符串。
+        /// </summary>
+        public static string Cuisine_Western {
+            get {
+                return ResourceManager.GetString("Cuisine_Western", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Zhejiang Cuisine 的本地化字符串。
+        /// </summary>
+        public static string Cuisine_Zhejiang {
+            get {
+                return ResourceManager.GetString("Cuisine_Zhejiang", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Current Location 的本地化字符串。
+        /// </summary>
+        public static string CurrentLocation {
+            get {
+                return ResourceManager.GetString("CurrentLocation", resourceCulture);
             }
         }
         
@@ -149,6 +248,15 @@ namespace Culinary_Guide.Resources {
         public static string DefaultNickname {
             get {
                 return ResourceManager.GetString("DefaultNickname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Description 的本地化字符串。
+        /// </summary>
+        public static string DescriptionLabel {
+            get {
+                return ResourceManager.GetString("DescriptionLabel", resourceCulture);
             }
         }
         
@@ -225,6 +333,24 @@ namespace Culinary_Guide.Resources {
         }
         
         /// <summary>
+        ///   查找类似 Failed to get location 的本地化字符串。
+        /// </summary>
+        public static string GetLocationFailed {
+            get {
+                return ResourceManager.GetString("GetLocationFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Getting location... 的本地化字符串。
+        /// </summary>
+        public static string GettingLocation {
+            get {
+                return ResourceManager.GetString("GettingLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Discover restaurants on Home! 的本地化字符串。
         /// </summary>
         public static string GoDiscover {
@@ -243,6 +369,15 @@ namespace Culinary_Guide.Resources {
         }
         
         /// <summary>
+        ///   查找类似 Latitude 的本地化字符串。
+        /// </summary>
+        public static string Latitude {
+            get {
+                return ResourceManager.GetString("Latitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Load failed: 的本地化字符串。
         /// </summary>
         public static string LoadFailed {
@@ -257,6 +392,33 @@ namespace Culinary_Guide.Resources {
         public static string Location {
             get {
                 return ResourceManager.GetString("Location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Location permission required to get your position 的本地化字符串。
+        /// </summary>
+        public static string LocationPermissionRequired {
+            get {
+                return ResourceManager.GetString("LocationPermissionRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Longitude 的本地化字符串。
+        /// </summary>
+        public static string Longitude {
+            get {
+                return ResourceManager.GetString("Longitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 meters 的本地化字符串。
+        /// </summary>
+        public static string Meters {
+            get {
+                return ResourceManager.GetString("Meters", resourceCulture);
             }
         }
         
@@ -360,6 +522,24 @@ namespace Culinary_Guide.Resources {
         }
         
         /// <summary>
+        ///   查找类似 Opening Hours 的本地化字符串。
+        /// </summary>
+        public static string OpeningHoursLabel {
+            get {
+                return ResourceManager.GetString("OpeningHoursLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Phone 的本地化字符串。
+        /// </summary>
+        public static string PhoneLabel {
+            get {
+                return ResourceManager.GetString("PhoneLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 Privacy Settings 的本地化字符串。
         /// </summary>
         public static string PrivacySettings {
@@ -392,6 +572,24 @@ namespace Culinary_Guide.Resources {
         public static string RestaurantCount {
             get {
                 return ResourceManager.GetString("RestaurantCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 {0} reviews 的本地化字符串。
+        /// </summary>
+        public static string ReviewCountFormat {
+            get {
+                return ResourceManager.GetString("ReviewCountFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 {0} reviews · Tap to view 的本地化字符串。
+        /// </summary>
+        public static string ReviewCountTapFormat {
+            get {
+                return ResourceManager.GetString("ReviewCountTapFormat", resourceCulture);
             }
         }
         
@@ -495,6 +693,114 @@ namespace Culinary_Guide.Resources {
         }
         
         /// <summary>
+        ///   查找类似 User Reviews 的本地化字符串。
+        /// </summary>
+        public static string UserReviewsLabel {
+            get {
+                return ResourceManager.GetString("UserReviewsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Edit Profile 的本地化字符串。
+        /// </summary>
+        public static string EditProfile {
+            get {
+                return ResourceManager.GetString("EditProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Nickname 的本地化字符串。
+        /// </summary>
+        public static string Nickname {
+            get {
+                return ResourceManager.GetString("Nickname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Bio 的本地化字符串。
+        /// </summary>
+        public static string Bio {
+            get {
+                return ResourceManager.GetString("Bio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Change Avatar 的本地化字符串。
+        /// </summary>
+        public static string ChangeAvatar {
+            get {
+                return ResourceManager.GetString("ChangeAvatar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Take Photo 的本地化字符串。
+        /// </summary>
+        public static string TakePhoto {
+            get {
+                return ResourceManager.GetString("TakePhoto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Choose from Gallery 的本地化字符串。
+        /// </summary>
+        public static string ChooseFromGallery {
+            get {
+                return ResourceManager.GetString("ChooseFromGallery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Save 的本地化字符串。
+        /// </summary>
+        public static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Enter nickname 的本地化字符串。
+        /// </summary>
+        public static string NicknamePlaceholder {
+            get {
+                return ResourceManager.GetString("NicknamePlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Tell us about yourself... 的本地化字符串。
+        /// </summary>
+        public static string BioPlaceholder {
+            get {
+                return ResourceManager.GetString("BioPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Profile updated! 的本地化字符串。
+        /// </summary>
+        public static string ProfileUpdated {
+            get {
+                return ResourceManager.GetString("ProfileUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Tap to change avatar 的本地化字符串。
+        /// </summary>
+        public static string TapToChangeAvatar {
+            get {
+                return ResourceManager.GetString("TapToChangeAvatar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 View more 的本地化字符串。
         /// </summary>
         public static string ViewMore {
@@ -522,7 +828,7 @@ namespace Culinary_Guide.Resources {
         }
         
         /// <summary>
-        ///   查找类似 What to eat today? 的本地化字符串。
+        ///   查找类似 what eat today？ 的本地化字符串。
         /// </summary>
         public static string WelcomeText {
             get {
@@ -536,213 +842,6 @@ namespace Culinary_Guide.Resources {
         public static string WriteReview {
             get {
                 return ResourceManager.GetString("WriteReview", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Current Location 的本地化字符串。
-        /// </summary>
-        public static string CurrentLocation {
-            get {
-                return ResourceManager.GetString("CurrentLocation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Latitude 的本地化字符串。
-        /// </summary>
-        public static string Latitude {
-            get {
-                return ResourceManager.GetString("Latitude", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Longitude 的本地化字符串。
-        /// </summary>
-        public static string Longitude {
-            get {
-                return ResourceManager.GetString("Longitude", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Accuracy 的本地化字符串。
-        /// </summary>
-        public static string Accuracy {
-            get {
-                return ResourceManager.GetString("Accuracy", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Location permission required to get your position 的本地化字符串。
-        /// </summary>
-        public static string LocationPermissionRequired {
-            get {
-                return ResourceManager.GetString("LocationPermissionRequired", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Cannot get current location 的本地化字符串。
-        /// </summary>
-        public static string CannotGetLocation {
-            get {
-                return ResourceManager.GetString("CannotGetLocation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Failed to get location 的本地化字符串。
-        /// </summary>
-        public static string GetLocationFailed {
-            get {
-                return ResourceManager.GetString("GetLocationFailed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 meters 的本地化字符串。
-        /// </summary>
-        public static string Meters {
-            get {
-                return ResourceManager.GetString("Meters", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Getting location... 的本地化字符串。
-        /// </summary>
-        public static string GettingLocation {
-            get {
-                return ResourceManager.GetString("GettingLocation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Sichuan Cuisine 的本地化字符串。
-        /// </summary>
-        public static string Cuisine_Sichuan {
-            get {
-                return ResourceManager.GetString("Cuisine_Sichuan", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Cantonese Cuisine 的本地化字符串。
-        /// </summary>
-        public static string Cuisine_Cantonese {
-            get {
-                return ResourceManager.GetString("Cuisine_Cantonese", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Zhejiang Cuisine 的本地化字符串。
-        /// </summary>
-        public static string Cuisine_Zhejiang {
-            get {
-                return ResourceManager.GetString("Cuisine_Zhejiang", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Hunan Cuisine 的本地化字符串。
-        /// </summary>
-        public static string Cuisine_Hunan {
-            get {
-                return ResourceManager.GetString("Cuisine_Hunan", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Beijing Cuisine 的本地化字符串。
-        /// </summary>
-        public static string Cuisine_Beijing {
-            get {
-                return ResourceManager.GetString("Cuisine_Beijing", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Shandong Cuisine 的本地化字符串。
-        /// </summary>
-        public static string Cuisine_Shandong {
-            get {
-                return ResourceManager.GetString("Cuisine_Shandong", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Western Cuisine 的本地化字符串。
-        /// </summary>
-        public static string Cuisine_Western {
-            get {
-                return ResourceManager.GetString("Cuisine_Western", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 {0} reviews 的本地化字符串。
-        /// </summary>
-        public static string ReviewCountFormat {
-            get {
-                return ResourceManager.GetString("ReviewCountFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 {0} reviews · Tap to view 的本地化字符串。
-        /// </summary>
-        public static string ReviewCountTapFormat {
-            get {
-                return ResourceManager.GetString("ReviewCountTapFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Address 的本地化字符串。
-        /// </summary>
-        public static string AddressLabel {
-            get {
-                return ResourceManager.GetString("AddressLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Phone 的本地化字符串。
-        /// </summary>
-        public static string PhoneLabel {
-            get {
-                return ResourceManager.GetString("PhoneLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Opening Hours 的本地化字符串。
-        /// </summary>
-        public static string OpeningHoursLabel {
-            get {
-                return ResourceManager.GetString("OpeningHoursLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 Description 的本地化字符串。
-        /// </summary>
-        public static string DescriptionLabel {
-            get {
-                return ResourceManager.GetString("DescriptionLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 User Reviews 的本地化字符串。
-        /// </summary>
-        public static string UserReviewsLabel {
-            get {
-                return ResourceManager.GetString("UserReviewsLabel", resourceCulture);
             }
         }
     }

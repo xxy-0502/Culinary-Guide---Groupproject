@@ -268,4 +268,39 @@
   <data name="UserReviewsLabel" xml:space="preserve">
     <value>用户评价</value>
   </data>
+  
+  <!-- 编辑资料 -->
+  <data name="EditProfile" xml:space="preserve">
+    <value>编辑资料</value>
+  </data>
+  <data name="Nickname" xml:space="preserve">
+    <value>昵称</value>
+  </data>
+  <data name="Bio" xml:space="preserve">
+    <value>简介</value>
+  </data>
+  <data name="ChangeAvatar" xml:space="preserve">
+    <value>更换头像</value>
+  </data>
+  <data name="TakePhoto" xml:space="preserve">
+    <value>拍照</value>
+  </data>
+  <data name="ChooseFromGallery" xml:space="preserve">
+    <value>从相册选择</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="NicknamePlaceholder" xml:space="preserve">
+    <value>请输入昵称</value>
+  </data>
+  <data name="BioPlaceholder" xml:space="preserve">
+    <value>介绍一下自己...</value>
+  </data>
+  <data name="ProfileUpdated" xml:space="preserve">
+    <value>资料已更新！</value>
+  </data>
+  <data name="TapToChangeAvatar" xml:space="preserve">
+    <value>点击更换头像</value>
+  </data>
 </root>

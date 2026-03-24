@@ -9,25 +9,32 @@ namespace Culinary_Guide
     {
         private readonly IRestaurantService _restaurantService;
         private readonly IFavoriteService _favoriteService;
+        private readonly ILocationService _locationService;
         private readonly ILanguageService _languageService;
+        private readonly IUserService _userService;
         private List<Restaurant> _allRestaurants = new();
         private SortOption _currentSort = SortOption.Distance;
         private TabType _currentTab = TabType.Home;
+        private double _currentLatitude = 39.9087;
+        private double _currentLongitude = 116.3975;
 
-        public MainPage(IRestaurantService restaurantService, IFavoriteService favoriteService, ILanguageService languageService)
+        public MainPage(IRestaurantService restaurantService, IFavoriteService favoriteService, ILocationService locationService, ILanguageService languageService, IUserService userService)
         {
             _restaurantService = restaurantService;
             _favoriteService = favoriteService;
+            _locationService = locationService;
             _languageService = languageService;
+            _userService = userService;
             InitializeComponent();
             BindingContext = Localize.Instance;
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
             _languageService.LanguageChanged += OnLanguageChanged;
             Localize.Instance.Invalidate();
+            await UpdateLocationDisplay();
             _ = LoadRestaurants();
             UpdateTabStyles();
         }
@@ -45,6 +52,68 @@ namespace Culinary_Guide
             var languageCode = _languageService.CurrentLanguage == AppLanguage.Chinese ? "zh-CN" : "en-US";
             _restaurantService.UpdateLanguage(languageCode);
             ApplySort();
+            UpdateLocationLabel();
+        }
+
+        private async Task UpdateLocationDisplay()
+        {
+            try
+            {
+                var location = await _locationService.GetUserLocationAsync();
+                _currentLatitude = location.Latitude;
+                _currentLongitude = location.Longitude;
+                UpdateLocationLabel();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"获取位置失败: {ex.Message}");
+                UpdateLocationLabel();
+            }
+        }
+
+        private void UpdateLocationLabel()
+        {
+            var isChinese = _languageService.CurrentLanguage == AppLanguage.Chinese;
+            
+            if (Math.Abs(_currentLatitude - 39.9087) < 0.01 && Math.Abs(_currentLongitude - 116.3975) < 0.01)
+            {
+                LocationLabel.Text = isChinese ? "北京" : "Beijing, China";
+            }
+            else if (Math.Abs(_currentLatitude - 37.422) < 1 && Math.Abs(_currentLongitude + 122.084) < 1)
+            {
+                LocationLabel.Text = isChinese ? "美国加州" : "California, USA";
+            }
+            else
+            {
+                LocationLabel.Text = $"{_currentLatitude:F2}, {_currentLongitude:F2}";
+            }
+        }
+
+        private async void OnLocationClicked(object sender, EventArgs e)
+        {
+            var loc = Localize.Instance;
+            var isChinese = _languageService.CurrentLanguage == AppLanguage.Chinese;
+            
+            var useSimulated = await DisplayAlert(
+                isChinese ? "位置设置" : "Location Settings",
+                isChinese ? "是否使用模拟位置（北京）？\n\n注意：Android模拟器默认位置在美国加州。\n如需使用真实位置，请在模拟器设置中更改位置。" 
+                          : "Use simulated location (Beijing)?\n\nNote: Android emulator default location is California, USA.\nTo use real location, please change location in emulator settings.",
+                isChinese ? "使用模拟位置" : "Use Simulated",
+                isChinese ? "使用真实位置" : "Use Real Location"
+            );
+
+            if (useSimulated)
+            {
+                _currentLatitude = 39.9087;
+                _currentLongitude = 116.3975;
+            }
+            else
+            {
+                await UpdateLocationDisplay();
+            }
+            
+            UpdateLocationLabel();
+            _ = LoadRestaurants();
         }
 
         private async Task LoadRestaurants()
@@ -158,7 +227,7 @@ namespace Culinary_Guide
         {
             _currentTab = TabType.Favorites;
             UpdateTabStyles();
-            var favoritesPage = new FavoritesPage(_restaurantService, _favoriteService, _allRestaurants);
+            var favoritesPage = new FavoritesPage(_restaurantService, _favoriteService, _locationService, _allRestaurants);
             await Navigation.PushAsync(favoritesPage);
         }
 
@@ -172,13 +241,13 @@ namespace Culinary_Guide
         {
             _currentTab = TabType.Explore;
             UpdateTabStyles();
-            var mapPage = new MapPage(_restaurantService, _favoriteService, _allRestaurants);
+            var mapPage = new MapPage(_restaurantService, _favoriteService, _locationService, _allRestaurants);
             await Navigation.PushAsync(mapPage);
         }
 
         private async void OnProfileClicked(object sender, EventArgs e)
         {
-            var profilePage = new ProfilePage(_favoriteService, _allRestaurants);
+            var profilePage = new ProfilePage(_favoriteService, _locationService, _allRestaurants, _userService);
             await Navigation.PushAsync(profilePage);
         }
 

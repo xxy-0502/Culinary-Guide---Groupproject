@@ -1,7 +1,6 @@
 using Culinary_Guide.Helpers;
 using Culinary_Guide.Models;
 using Culinary_Guide.Services;
-using Microsoft.Maui.Devices.Sensors;
 
 namespace Culinary_Guide.Views
 {
@@ -9,6 +8,7 @@ namespace Culinary_Guide.Views
     {
         private readonly IRestaurantService _restaurantService;
         private readonly IFavoriteService _favoriteService;
+        private readonly ILocationService _locationService;
         private readonly ILanguageService _languageService;
         private readonly List<Restaurant> _allRestaurants;
         private RestaurantMapDrawable _mapDrawable;
@@ -16,10 +16,15 @@ namespace Culinary_Guide.Views
         private double _currentLongitude = 116.3975;
         private bool _isRealLocation = false;
 
-        public MapPage(IRestaurantService restaurantService, IFavoriteService favoriteService, List<Restaurant> allRestaurants)
+        public MapPage(
+            IRestaurantService restaurantService, 
+            IFavoriteService favoriteService,
+            ILocationService locationService,
+            List<Restaurant> allRestaurants)
         {
             _restaurantService = restaurantService;
             _favoriteService = favoriteService;
+            _locationService = locationService;
             _languageService = MauiProgram.Services?.GetRequiredService<ILanguageService>()!;
             _allRestaurants = allRestaurants;
             InitializeComponent();
@@ -34,7 +39,7 @@ namespace Culinary_Guide.Views
             UpdateLabels();
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
             if (_languageService != null)
@@ -42,6 +47,9 @@ namespace Culinary_Guide.Views
                 _languageService.LanguageChanged += OnLanguageChanged;
             }
             Localize.Instance.Invalidate();
+            
+            await GetRealLocationAsync();
+            
             MapView.Invalidate();
             UpdateLabels();
         }
@@ -66,6 +74,38 @@ namespace Culinary_Guide.Views
             var loc = Localize.Instance;
             RestaurantCountLabel.Text = $"{_allRestaurants.Count} {loc.RestaurantCount}";
             NoRestaurantsLayout.IsVisible = _allRestaurants.Count == 0;
+            
+            if (_isRealLocation)
+            {
+                LocationInfoLabel.Text = $"{loc.Latitude}: {_currentLatitude:F6}\n{loc.Longitude}: {_currentLongitude:F6}";
+                LocationInfoLabel.IsVisible = true;
+            }
+        }
+
+        private async Task GetRealLocationAsync()
+        {
+            try
+            {
+                var loc = Localize.Instance;
+                LocationInfoLabel.Text = loc.GettingLocation;
+                LocationInfoLabel.IsVisible = true;
+
+                var location = await _locationService.GetUserLocationAsync();
+                
+                _currentLatitude = location.Latitude;
+                _currentLongitude = location.Longitude;
+                _isRealLocation = true;
+
+                _mapDrawable = new RestaurantMapDrawable(_allRestaurants, _currentLatitude, _currentLongitude, _isRealLocation);
+                MapView.Drawable = _mapDrawable;
+                MapView.Invalidate();
+
+                LocationInfoLabel.Text = $"{loc.Latitude}: {_currentLatitude:F6}\n{loc.Longitude}: {_currentLongitude:F6}";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"获取位置失败: {ex.Message}");
+            }
         }
 
         private async void OnMyLocationClicked(object sender, EventArgs e)
@@ -89,40 +129,21 @@ namespace Culinary_Guide.Views
                 LocationInfoLabel.Text = loc.GettingLocation;
                 LocationInfoLabel.IsVisible = true;
 
-                var request = new GeolocationRequest
-                {
-                    DesiredAccuracy = GeolocationAccuracy.Medium,
-                    Timeout = TimeSpan.FromSeconds(15)
-                };
+                var location = await _locationService.GetUserLocationAsync();
+                
+                _currentLatitude = location.Latitude;
+                _currentLongitude = location.Longitude;
+                _isRealLocation = true;
 
-                var location = await Geolocation.Default.GetLocationAsync(request);
+                _mapDrawable = new RestaurantMapDrawable(_allRestaurants, _currentLatitude, _currentLongitude, _isRealLocation);
+                MapView.Drawable = _mapDrawable;
+                MapView.Invalidate();
 
-                if (location != null)
-                {
-                    _currentLatitude = location.Latitude;
-                    _currentLongitude = location.Longitude;
-                    _isRealLocation = true;
+                LocationInfoLabel.Text = $"{loc.Latitude}: {location.Latitude:F6}\n{loc.Longitude}: {location.Longitude:F6}";
 
-                    _mapDrawable = new RestaurantMapDrawable(_allRestaurants, _currentLatitude, _currentLongitude, _isRealLocation);
-                    MapView.Drawable = _mapDrawable;
-                    MapView.Invalidate();
-
-                    var accuracyText = location.Accuracy.HasValue 
-                        ? $"{loc.Accuracy}: {location.Accuracy.Value:F1} {loc.Meters}" 
-                        : "";
-                    
-                    LocationInfoLabel.Text = $"{loc.Latitude}: {location.Latitude:F6}\n{loc.Longitude}: {location.Longitude:F6}";
-                    LocationInfoLabel.IsVisible = true;
-
-                    await DisplayAlert(loc.CurrentLocation, 
-                        $"{loc.Latitude}: {location.Latitude:F6}\n{loc.Longitude}: {location.Longitude:F6}\n{accuracyText}", 
-                        loc.OK);
-                }
-                else
-                {
-                    LocationInfoLabel.IsVisible = false;
-                    await DisplayAlert(loc.Error, loc.CannotGetLocation, loc.OK);
-                }
+                await DisplayAlert(loc.CurrentLocation, 
+                    $"{loc.Latitude}: {location.Latitude:F6}\n{loc.Longitude}: {location.Longitude:F6}", 
+                    loc.OK);
             }
             catch (Exception ex)
             {
@@ -133,7 +154,7 @@ namespace Culinary_Guide.Views
 
         private async void OnFavoritesTabClicked(object sender, EventArgs e)
         {
-            var favoritesPage = new FavoritesPage(_restaurantService, _favoriteService, _allRestaurants);
+            var favoritesPage = new FavoritesPage(_restaurantService, _favoriteService, _locationService, _allRestaurants);
             await Navigation.PushAsync(favoritesPage);
         }
 

@@ -68,7 +68,9 @@ namespace Culinary_Guide.Views
         private async void LoadReviews()
         {
             var reviews = await _restaurantService.GetReviewsAsync(_restaurant.Id);
-            ReviewsList.ItemsSource = reviews;
+            ReviewsList.ItemsSource = null;
+            ReviewsList.ItemsSource = reviews.OrderByDescending(r => r.CreatedAt).ToList();
+            Console.WriteLine($"加载评论: RestaurantId={_restaurant.Id}, 评论数量={reviews.Count}");
         }
 
         private void UpdateFavoriteIcon()
@@ -131,7 +133,9 @@ namespace Culinary_Guide.Views
                     };
 
                     await _restaurantService.AddReviewAsync(newReview);
-                    _restaurant.ReviewCount++;
+                    
+                    OnPropertyChanged(nameof(_restaurant.Rating));
+                    
                     UpdateLabels();
                     LoadReviews();
                     

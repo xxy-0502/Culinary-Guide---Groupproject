@@ -17,12 +17,22 @@ namespace Culinary_Guide
 
             var restaurantService = services.GetRequiredService<IRestaurantService>();
             var favoriteService = services.GetRequiredService<IFavoriteService>();
+            var locationService = services.GetRequiredService<ILocationService>();
             var languageService = services.GetRequiredService<ILanguageService>();
+            var userService = services.GetRequiredService<IUserService>();
             
-            var mainPage = new MainPage(restaurantService, favoriteService, languageService);
+            _ = InitializeDataAsync(restaurantService, favoriteService);
+            
+            var mainPage = new MainPage(restaurantService, favoriteService, locationService, languageService, userService);
             var navPage = new NavigationPage(mainPage);
             
             return new Window(navPage);
+        }
+
+        private async Task InitializeDataAsync(IRestaurantService restaurantService, IFavoriteService favoriteService)
+        {
+            await favoriteService.InitializeAsync();
+            await restaurantService.InitializeSampleDataAsync();
         }
     }
 }

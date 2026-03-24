@@ -72,9 +72,13 @@
                     Padding="12,8"
                     StrokeShape="RoundRectangle 20"
                     HorizontalOptions="Start">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnLocationClicked" />
+                </Border.GestureRecognizers>
                 <HorizontalStackLayout Spacing="4">
                     <Label Text="📍" FontSize="16" />
-                    <Label Text="{Binding Location}"
+                    <Label x:Name="LocationLabel"
+                           Text="{Binding Location}"
                            TextColor="#2E7D32"
                            FontSize="14" />
                 </HorizontalStackLayout>

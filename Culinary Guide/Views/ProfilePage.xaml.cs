@@ -7,28 +7,32 @@ namespace Culinary_Guide.Views
     public partial class ProfilePage : ContentPage
     {
         private readonly IFavoriteService _favoriteService;
+        private readonly ILocationService _locationService;
         private readonly ILanguageService _languageService;
+        private readonly IUserService _userService;
         private readonly List<Restaurant> _allRestaurants;
         private List<BrowseHistory> _browseHistory = new();
 
-        public ProfilePage(IFavoriteService favoriteService, List<Restaurant> allRestaurants)
+        public ProfilePage(IFavoriteService favoriteService, ILocationService locationService, List<Restaurant> allRestaurants, IUserService userService)
         {
             _favoriteService = favoriteService;
+            _locationService = locationService;
             _languageService = MauiProgram.Services?.GetRequiredService<ILanguageService>()!;
+            _userService = userService;
             _allRestaurants = allRestaurants;
             InitializeComponent();
             BindingContext = Localize.Instance;
-            LoadData();
-            UpdateLanguageLabel();
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
             if (_languageService != null)
             {
                 _languageService.LanguageChanged += OnLanguageChanged;
             }
+            _userService.ProfileChanged += OnProfileChanged;
+            await LoadUserProfile();
             LoadData();
             UpdateLanguageLabel();
         }
@@ -39,6 +43,41 @@ namespace Culinary_Guide.Views
             if (_languageService != null)
             {
                 _languageService.LanguageChanged -= OnLanguageChanged;
+            }
+            _userService.ProfileChanged -= OnProfileChanged;
+        }
+
+        private void OnProfileChanged(object? sender, EventArgs e)
+        {
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                await LoadUserProfile();
+            });
+        }
+
+        private async Task LoadUserProfile()
+        {
+            var profile = await _userService.GetUserProfileAsync();
+            var loc = Localize.Instance;
+            
+            UserNicknameLabel.Text = string.IsNullOrWhiteSpace(profile.Nickname) 
+                ? loc.DefaultNickname 
+                : profile.Nickname;
+            
+            UserBioLabel.Text = string.IsNullOrWhiteSpace(profile.Bio) 
+                ? loc.DefaultBio 
+                : profile.Bio;
+            
+            if (!string.IsNullOrEmpty(profile.AvatarPath) && File.Exists(profile.AvatarPath))
+            {
+                UserAvatarImage.Source = ImageSource.FromFile(profile.AvatarPath);
+                UserAvatarImage.IsVisible = true;
+                UserAvatarPlaceholder.IsVisible = false;
+            }
+            else
+            {
+                UserAvatarImage.IsVisible = false;
+                UserAvatarPlaceholder.IsVisible = true;
             }
         }
 
@@ -75,7 +114,9 @@ namespace Culinary_Guide.Views
 
         private async void OnFavoritesTabClicked(object sender, EventArgs e)
         {
-            var favoritesPage = new FavoritesPage(null!, _favoriteService, _allRestaurants);
+            var locationService = MauiProgram.Services?.GetRequiredService<ILocationService>()!;
+            var restaurantService = MauiProgram.Services?.GetRequiredService<IRestaurantService>()!;
+            var favoritesPage = new FavoritesPage(restaurantService, _favoriteService, locationService, _allRestaurants);
             await Navigation.PushAsync(favoritesPage);
         }
 
@@ -86,7 +127,8 @@ namespace Culinary_Guide.Views
 
         private async void OnExploreTabClicked(object sender, EventArgs e)
         {
-            var mapPage = new MapPage(null!, _favoriteService, _allRestaurants);
+            var restaurantService = MauiProgram.Services?.GetRequiredService<IRestaurantService>()!;
+            var mapPage = new MapPage(restaurantService, _favoriteService, _locationService, _allRestaurants);
             await Navigation.PushAsync(mapPage);
         }
 
@@ -128,6 +170,15 @@ namespace Culinary_Guide.Views
         {
             var loc = Localize.Instance;
             await DisplayAlert(loc.AboutApp, loc.AboutAppContent, loc.OK);
+        }
+
+        private async void OnEditProfileClicked(object sender, EventArgs e)
+        {
+            var editPage = MauiProgram.Services?.GetRequiredService<EditProfilePage>();
+            if (editPage != null)
+            {
+                await Navigation.PushAsync(editPage);
+            }
         }
     }
 

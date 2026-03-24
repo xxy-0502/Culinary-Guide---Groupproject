@@ -8,14 +8,16 @@ namespace Culinary_Guide.Views
     {
         private readonly IRestaurantService _restaurantService;
         private readonly IFavoriteService _favoriteService;
+        private readonly ILocationService _locationService;
         private readonly ILanguageService _languageService;
         private readonly List<Restaurant> _allRestaurants;
         private List<Restaurant> _favoriteRestaurants = new();
 
-        public FavoritesPage(IRestaurantService restaurantService, IFavoriteService favoriteService, List<Restaurant> allRestaurants)
+        public FavoritesPage(IRestaurantService restaurantService, IFavoriteService favoriteService, ILocationService locationService, List<Restaurant> allRestaurants)
         {
             _restaurantService = restaurantService;
             _favoriteService = favoriteService;
+            _locationService = locationService;
             _languageService = MauiProgram.Services?.GetRequiredService<ILanguageService>()!;
             _allRestaurants = allRestaurants;
             InitializeComponent();
@@ -91,7 +93,7 @@ namespace Culinary_Guide.Views
 
         private async void OnExploreTabClicked(object sender, EventArgs e)
         {
-            var mapPage = new MapPage(_restaurantService, _favoriteService, _allRestaurants);
+            var mapPage = new MapPage(_restaurantService, _favoriteService, _locationService, _allRestaurants);
             await Navigation.PushAsync(mapPage);
         }
     }

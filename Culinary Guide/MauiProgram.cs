@@ -20,14 +20,17 @@ namespace Culinary_Guide
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            builder.Services.AddSingleton<ILocationService, SimulatedLocationService>();
+            builder.Services.AddSingleton<DatabaseService>();
+            builder.Services.AddSingleton<ILocationService, RealLocationService>();
             builder.Services.AddSingleton<IImageCacheService, ImageCacheService>();
-            builder.Services.AddSingleton<IFavoriteService, InMemoryFavoriteService>();
+            builder.Services.AddSingleton<IFavoriteService, FavoriteService>();
             builder.Services.AddSingleton<ILanguageService, LanguageService>();
             builder.Services.AddSingleton<IRestaurantService, RestaurantService>();
+            builder.Services.AddSingleton<IUserService, UserService>();
 
             builder.Services.AddTransient<MainPage>();
             builder.Services.AddTransient<RestaurantDetailPage>();
+            builder.Services.AddTransient<EditProfilePage>();
 
 #if DEBUG
             builder.Logging.AddDebug();

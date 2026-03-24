@@ -57,7 +57,7 @@
                         StrokeShape="RoundRectangle 16"
                         Padding="20"
                         Stroke="Transparent">
-                    <Grid ColumnDefinitions="Auto,*"
+                    <Grid ColumnDefinitions="Auto,*,Auto"
                           RowDefinitions="Auto,Auto">
                         
                         <!-- 头像 -->
@@ -68,29 +68,55 @@
                                 StrokeShape="RoundRectangle 35"
                                 BackgroundColor="{StaticResource Primary}"
                                 Margin="0,0,16,0">
-                            <Label Text="👤"
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnEditProfileClicked" />
+                            </Border.GestureRecognizers>
+                            <Image x:Name="UserAvatarImage"
+                                   Source="user.png"
+                                   Aspect="AspectFill"
+                                   IsVisible="False" />
+                            <Label x:Name="UserAvatarPlaceholder"
+                                   Text="👤"
                                    FontSize="32"
                                    HorizontalOptions="Center"
                                    VerticalOptions="Center" />
                         </Border>
                         
                         <!-- 昵称 -->
-                        <Label Grid.Row="0"
+                        <Label x:Name="UserNicknameLabel"
+                               Grid.Row="0"
                                Grid.Column="1"
-                               Text="{Binding DefaultNickname}"
                                FontSize="20"
                                FontAttributes="Bold"
                                TextColor="{StaticResource TextPrimary}"
                                VerticalOptions="End" />
                         
                         <!-- 简介 -->
-                        <Label Grid.Row="1"
+                        <Label x:Name="UserBioLabel"
+                               Grid.Row="1"
                                Grid.Column="1"
-                               Text="{Binding DefaultBio}"
                                FontSize="14"
                                TextColor="{StaticResource TextSecondary}"
                                VerticalOptions="Start"
                                Margin="0,4,0,0" />
+                        
+                        <!-- 编辑按钮 -->
+                        <Border Grid.RowSpan="2"
+                                Grid.Column="2"
+                                WidthRequest="36"
+                                HeightRequest="36"
+                                StrokeShape="RoundRectangle 18"
+                                BackgroundColor="{StaticResource Primary}"
+                                Stroke="Transparent"
+                                VerticalOptions="Center">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnEditProfileClicked" />
+                            </Border.GestureRecognizers>
+                            <Label Text="✏️"
+                                   FontSize="16"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+                        </Border>
                     </Grid>
                 </Border>
                 

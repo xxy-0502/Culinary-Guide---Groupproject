@@ -85,6 +85,19 @@ namespace Culinary_Guide.Helpers
         public string DescriptionLabel => AppResources.DescriptionLabel;
         public string UserReviewsLabel => AppResources.UserReviewsLabel;
         
+        // Edit Profile
+        public string EditProfile => AppResources.EditProfile;
+        public string Nickname => AppResources.Nickname;
+        public string Bio => AppResources.Bio;
+        public string ChangeAvatar => AppResources.ChangeAvatar;
+        public string TakePhoto => AppResources.TakePhoto;
+        public string ChooseFromGallery => AppResources.ChooseFromGallery;
+        public string Save => AppResources.Save;
+        public string NicknamePlaceholder => AppResources.NicknamePlaceholder;
+        public string BioPlaceholder => AppResources.BioPlaceholder;
+        public string ProfileUpdated => AppResources.ProfileUpdated;
+        public string TapToChangeAvatar => AppResources.TapToChangeAvatar;
+        
         public void Invalidate()
         {
             OnPropertyChanged(null);
